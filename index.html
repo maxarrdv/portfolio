@@ -1,11 +1,2077 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Portfolio</title>
-  </head>
-  <body>
-    <h1>Tu página está arriba 😎</h1>
-    <p>Reemplaza este archivo con tu HTML completo para que quede 10/10.</p>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050505">
+<title>Maximiliano Rodriguez | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@700;900&family=Playfair+Display:wght@600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#050505;
+    --white:#f2f2f0;
+    --muted:#9a9aa4;
+    --line:rgba(255,255,255,.11);
+    --panel:rgba(255,255,255,.045);
+    --panel-strong:rgba(255,255,255,.075);
+    --blue:#3a7bd5;
+    --gold:#f5c842;
+    --green:#4cff6a;
+    --purple:#a855f7;
+    --nav-h:64px;
+    --max:980px;
+    --ease:cubic-bezier(.22,.75,.25,1);
+    --accent:var(--blue);
+    --accent-soft:rgba(58,123,213,.14);
+    --accent-line:rgba(58,123,213,.28);
+    --theme-font:'Inter',system-ui,sans-serif;
+    --display-font:'Orbitron',sans-serif;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    min-height:100vh;
+    background:#050505;
+    color:var(--white);
+    font-family:var(--theme-font);
+    line-height:1.55;
+    overflow-x:hidden;
+    transition:background .75s var(--ease),color .4s var(--ease);
+  }
+  body::before,
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-3;
+    transition:opacity .65s var(--ease),background .65s var(--ease),filter .65s var(--ease);
+  }
+  body::before{opacity:.95;}
+  body::after{opacity:.65;z-index:-2;}
+  ::selection{background:color-mix(in srgb,var(--accent) 38%,transparent);}
+
+  a{color:inherit;}
+  button{font:inherit;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+  .skip-link{
+    position:fixed;
+    top:12px;
+    left:14px;
+    z-index:1400;
+    padding:10px 14px;
+    border-radius:999px;
+    border:1px solid var(--accent-line);
+    background:rgba(5,5,7,.96);
+    color:var(--white);
+    text-decoration:none;
+    transform:translateY(-160%);
+    transition:transform .2s var(--ease),border-color .2s var(--ease),background .2s var(--ease);
+    box-shadow:0 18px 42px rgba(0,0,0,.22);
+  }
+  .skip-link:focus-visible{
+    transform:translateY(0);
+    outline:none;
+    border-color:var(--accent);
+    background:rgba(18,18,24,.98);
+  }
+
+  /* NAVBAR */
+  #navbar{
+    position:fixed;
+    top:0;left:0;right:0;
+    height:var(--nav-h);
+    z-index:1000;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 clamp(16px,4vw,42px);
+    background:rgba(5,5,7,.70);
+    border-bottom:1px solid var(--line);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    box-shadow:0 18px 60px rgba(0,0,0,.20);
+    transition:background .35s var(--ease),border-color .35s var(--ease),box-shadow .35s var(--ease);
+  }
+  .nav-mark{
+    display:flex;align-items:center;gap:12px;
+    text-decoration:none;min-width:0;
+  }
+  .mark-dot{
+    width:11px;height:11px;border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 24px var(--accent-soft);
+    flex:0 0 auto;
+    transition:background .35s var(--ease),box-shadow .35s var(--ease);
+  }
+  .nav-name{
+    font-family:'Orbitron',sans-serif;
+    font-size:clamp(10px,1.6vw,13px);
+    text-transform:uppercase;
+    letter-spacing:1.55px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .nav-name span{color:var(--accent);transition:color .35s var(--ease);}
+  .nav-links{
+    display:flex;
+    align-items:center;
+    gap:clamp(16px,2.6vw,30px);
+  }
+
+  /* Refined navbar controls: functional buttons, visually clean links. */
+  .contact-trigger{
+    appearance:none;
+    -webkit-appearance:none;
+    border:0;
+    background:transparent;
+    color:rgba(255,255,255,.74);
+    text-decoration:none;
+    padding:7px 0;
+    border-radius:0;
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    font-family:'Orbitron',sans-serif;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1.3px;
+    text-transform:uppercase;
+    cursor:pointer;
+    position:relative;
+    transition:color .2s var(--ease),transform .2s var(--ease);
+  }
+  .contact-trigger::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:16px;
+    bottom:2px;
+    height:1px;
+    background:var(--accent);
+    opacity:.85;
+    transform:scaleX(0);
+    transform-origin:right;
+    transition:transform .24s var(--ease),background .24s var(--ease),opacity .24s var(--ease);
+  }
+  .contact-trigger:hover,
+  .contact-trigger.open,
+  .contact-trigger:focus-visible{
+    color:#fff;
+    outline:none;
+    transform:translateY(-1px);
+  }
+  .contact-trigger:hover::after,
+  .contact-trigger.open::after,
+  .contact-trigger:focus-visible::after{
+    transform:scaleX(1);
+    transform-origin:left;
+  }
+  .chev{
+    width:8px;
+    height:8px;
+    opacity:.55;
+    transition:transform .22s var(--ease),opacity .22s var(--ease);
+    flex:0 0 auto;
+  }
+  .contact-trigger.open .chev,
+  .contact-trigger:hover .chev,
+  .contact-trigger:focus-visible .chev{opacity:.95;}
+  .contact-trigger.open .chev{transform:rotate(180deg);}
+
+  .nav-item{position:relative;}
+  .dropdown{
+    position:absolute;
+    top:calc(100% + 14px);
+    right:0;
+    width:205px;
+    border:1px solid var(--accent-line);
+    border-radius:14px;
+    background:linear-gradient(180deg,rgba(12,12,16,.94),rgba(6,6,9,.90));
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    box-shadow:0 24px 70px rgba(0,0,0,.42);
+    overflow:hidden;
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(-8px) scale(.98);
+    transition:opacity .2s var(--ease),transform .2s var(--ease),border-color .3s var(--ease),background .3s var(--ease);
+  }
+  .dropdown.open{opacity:1;pointer-events:auto;transform:none;}
+  .dropdown a{
+    display:flex;align-items:center;gap:10px;
+    padding:11px 14px;
+    color:rgba(255,255,255,.74);
+    text-decoration:none;
+    border-bottom:1px solid rgba(255,255,255,.06);
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:.25px;
+    transition:background .18s var(--ease),color .18s var(--ease),padding-left .18s var(--ease);
+  }
+  .dropdown a:last-child{border-bottom:none;}
+  .dropdown a:hover,.dropdown a:focus-visible{background:var(--accent-soft);color:#fff;outline:none;padding-left:17px;}
+
+  /* THEME ATMOSPHERE */
+  .theme-atmosphere{position:fixed;inset:var(--nav-h) 0 0;z-index:-1;pointer-events:none;overflow:hidden;}
+  .atm{position:absolute;inset:0;opacity:0;transition:opacity .75s var(--ease),transform .75s var(--ease);transform:scale(1.015);}
+  body.theme-stem .atm-stem,
+  body.theme-art .atm-art,
+  body.theme-hum .atm-hum,
+  body.theme-work .atm-work{opacity:1;transform:scale(1);}
+
+  .atm-stem svg{width:100%;height:100%;opacity:.45;}
+  .tech-console{
+    position:absolute;right:clamp(18px,6vw,100px);top:clamp(96px,18vh,164px);
+    width:min(310px,34vw);
+    border:1px solid rgba(58,123,213,.20);
+    background:linear-gradient(180deg,rgba(5,18,36,.24),rgba(3,8,15,.06));
+    color:rgba(185,215,255,.30);
+    border-radius:18px;
+    padding:18px;
+    font-family:'Share Tech Mono',monospace;
+    font-size:11px;
+    letter-spacing:1.2px;
+    box-shadow:0 28px 90px rgba(0,0,0,.16);
+  }
+  .tech-console span{display:block;border-bottom:1px solid rgba(58,123,213,.055);padding:4px 0;}
+
+  .atm-art::before{
+    content:"";position:absolute;left:50%;top:82px;transform:translateX(-50%);
+    width:min(760px,84vw);height:min(545px,62vh);
+    border-radius:420px 420px 30px 30px;
+    border:1px solid rgba(245,200,66,.12);
+    background:
+      radial-gradient(ellipse at 50% 0%,rgba(245,200,66,.10),transparent 42%),
+      repeating-radial-gradient(ellipse at 50% 0%,rgba(245,200,66,.035) 0 1px,transparent 1px 38px);
+    box-shadow:inset 0 0 90px rgba(245,200,66,.035),0 42px 120px rgba(0,0,0,.20);
+  }
+  .atm-art::after{
+    content:"";position:absolute;inset:0;opacity:.38;
+    background:
+      radial-gradient(circle at 16% 26%,rgba(245,200,66,.13),transparent 11%),
+      radial-gradient(circle at 82% 28%,rgba(150,70,28,.13),transparent 13%),
+      repeating-linear-gradient(45deg,rgba(245,200,66,.022) 0 1px,transparent 1px 17px);
+  }
+  .art-caption{
+    position:absolute;left:clamp(18px,7vw,110px);bottom:clamp(70px,12vh,120px);
+    writing-mode:vertical-rl;text-orientation:mixed;
+    font-family:'Playfair Display',Georgia,serif;
+    color:rgba(245,200,66,.24);
+    letter-spacing:5px;
+    text-transform:uppercase;
+    font-size:12px;
+  }
+
+  .book-page{
+    position:absolute;left:clamp(18px,6vw,95px);top:clamp(110px,20vh,190px);
+    width:min(330px,36vw);
+    min-height:235px;
+    padding:25px 24px;
+    border-left:3px solid rgba(76,255,106,.22);
+    border-radius:4px 22px 22px 4px;
+    background:linear-gradient(90deg,rgba(76,255,106,.052),rgba(255,255,255,.018));
+    color:rgba(218,255,225,.30);
+    box-shadow:0 32px 100px rgba(0,0,0,.16);
+  }
+  .book-page span{font-family:'Playfair Display',Georgia,serif;font-size:34px;font-style:italic;color:rgba(218,255,225,.28);}
+  .book-page p{font-family:'Playfair Display',Georgia,serif;font-size:12px;line-height:2.1;margin-top:16px;}
+  .margin-note{
+    position:absolute;right:clamp(18px,8vw,120px);bottom:clamp(70px,11vh,118px);
+    color:rgba(76,255,106,.22);
+    font-family:'Playfair Display',Georgia,serif;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    font-size:12px;
+  }
+
+  .exec-card{
+    position:absolute;right:clamp(20px,7vw,110px);top:clamp(110px,20vh,182px);
+    width:min(330px,36vw);
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:20px;
+    padding:20px 22px;
+    background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.018));
+    color:rgba(255,255,255,.38);
+    font-family:Inter,system-ui,sans-serif;
+    font-size:11px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    box-shadow:0 32px 100px rgba(0,0,0,.22);
+  }
+  .exec-card::after{content:"";display:block;margin-top:18px;height:58px;border-radius:14px;background:linear-gradient(90deg,rgba(255,255,255,.18),rgba(255,255,255,.045));}
+  .exec-lines{position:absolute;left:clamp(20px,7vw,110px);bottom:clamp(70px,13vh,126px);width:min(340px,38vw);display:grid;gap:10px;}
+  .exec-lines span{display:block;height:8px;border-radius:99px;background:rgba(255,255,255,.08);}
+  .exec-lines span:nth-child(2){width:72%;}.exec-lines span:nth-child(3){width:88%;}.exec-lines span:nth-child(4){width:54%;}
+
+  /* APP */
+  #app{max-width:var(--max);margin:0 auto;padding-top:var(--nav-h);padding-bottom:44px;}
+  .hero{
+    position:relative;
+    min-height:calc(100svh - var(--nav-h));
+    display:grid;
+    align-content:center;
+    padding:clamp(30px,5vw,56px) clamp(16px,4vw,30px) 28px;
+  }
+  .intro{
+    max-width:720px;
+    margin:0 auto 18px;
+    text-align:center;
+    transition:opacity .3s var(--ease),max-height .35s var(--ease),margin .3s var(--ease),transform .3s var(--ease);
+    overflow:hidden;
+  }
+  .eyebrow{
+    display:inline-flex;
+    gap:8px;
+    align-items:center;
+    color:var(--accent);
+    font-family:'Share Tech Mono',monospace;
+    font-size:12px;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    margin-bottom:10px;
+    transition:color .35s var(--ease);
+  }
+  .eyebrow::before,.eyebrow::after{content:"";height:1px;width:36px;background:var(--accent-line);}
+  .hero-name{
+    font-family:'Orbitron',sans-serif;
+    font-size:clamp(24px,6vw,62px);
+    line-height:1.02;
+    text-transform:uppercase;
+    letter-spacing:clamp(2px,.7vw,8px);
+    text-wrap:balance;
+    margin-bottom:10px;
+  }
+  .hero-sub{
+    color:rgba(255,255,255,.66);
+    font-size:clamp(13px,1.7vw,16px);
+    letter-spacing:.8px;
+    max-width:650px;
+    margin:0 auto;
+  }
+  .theme-word{color:var(--accent);transition:color .35s var(--ease);font-weight:800;}
+
+  .stage-wrap{
+    position:relative;
+    width:100vw;
+    left:50%;
+    transform:translateX(-50%);
+    isolation:isolate;
+  }
+  .stage-wrap::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.026),transparent);
+    border-top:1px solid rgba(255,255,255,.035);
+    border-bottom:1px solid rgba(255,255,255,.035);
+    transition:background .4s var(--ease),border-color .4s var(--ease),opacity .4s var(--ease);
+  }
+  .stage{
+    width:100%;
+    max-width:min(100vw,1120px);
+    height:320px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:56px minmax(0,720px) 56px;
+    column-gap:clamp(8px,2.4vw,22px);
+    align-items:center;
+    justify-content:center;
+    padding:0 clamp(10px,3vw,28px);
+  }
+  .arr{
+    flex:0 0 auto;
+    width:43px;height:43px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.16);
+    background:rgba(255,255,255,.06);
+    color:var(--white);
+    font-size:24px;
+    display:grid;
+    place-items:center;
+    cursor:pointer;
+    transition:background .2s,border-color .2s,transform .2s,box-shadow .2s;
+    -webkit-tap-highlight-color:transparent;
+    user-select:none;
+  }
+  .arr:hover,.arr:focus-visible{background:var(--accent-soft);border-color:var(--accent-line);outline:none;box-shadow:0 14px 40px rgba(0,0,0,.2);}
+  .arr:active{transform:scale(.94);}
+  .arr{position:relative;z-index:60;justify-self:center;}
+  body.panel-open .arr{display:grid;opacity:1;visibility:visible;pointer-events:auto;}
+  .viewport{position:relative;width:min(100%,720px);height:100%;overflow:hidden;justify-self:center;}
+  .fig{
+    position:absolute;
+    left:50%;bottom:25px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    cursor:pointer;
+    transform-origin:bottom center;
+    transition:transform .55s var(--ease),opacity .45s var(--ease),filter .45s var(--ease);
+    -webkit-tap-highlight-color:transparent;
+    user-select:none;
+  }
+  .fig.s-center{transform:translateX(-50%) scale(1);opacity:1;z-index:10;filter:none;}
+  .fig.s-left{transform:translateX(calc(-50% - 155px)) scale(.64);opacity:.46;z-index:5;filter:saturate(.72);}
+  .fig.s-right{transform:translateX(calc(-50% + 155px)) scale(.64);opacity:.46;z-index:5;filter:saturate(.72);}
+  .fig.s-far-left{transform:translateX(calc(-50% - 270px)) scale(.38);opacity:.16;z-index:2;filter:saturate(.45);}
+  .fig.s-far-right{transform:translateX(calc(-50% + 270px)) scale(.38);opacity:.16;z-index:2;filter:saturate(.45);}
+  .fig.s-hidden-l{transform:translateX(calc(-50% - 370px)) scale(.25);opacity:0;z-index:0;pointer-events:none;}
+  .fig.s-hidden-r{transform:translateX(calc(-50% + 370px)) scale(.25);opacity:0;z-index:0;pointer-events:none;}
+
+  .avatar{
+    position:relative;
+    width:160px;height:182px;
+    display:grid;place-items:end center;
+  }
+  .avatar svg{width:155px;height:182px;display:block;transition:filter .35s var(--ease);}
+  .avatar::before{
+    content:"";position:absolute;inset:auto 12px 8px 12px;height:52px;
+    border-radius:999px;
+    background:radial-gradient(ellipse at center,var(--accent-soft),transparent 70%);
+    filter:blur(10px);
+    z-index:-1;
+    transition:background .35s var(--ease);
+  }
+  .fig.s-center::after{
+    position:absolute;
+    top:2px;right:12px;
+    width:36px;height:36px;border-radius:50%;
+    display:grid;place-items:center;
+    border:1px solid var(--accent-line);
+    background:color-mix(in srgb,var(--accent) 12%,rgba(0,0,0,.4));
+    color:var(--accent);
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:.4px;
+    box-shadow:0 18px 45px rgba(0,0,0,.35);
+    transition:color .35s,background .35s,border-color .35s;
+  }
+  .fig-label{
+    margin-top:8px;
+    font-weight:900;
+    text-align:center;
+    white-space:nowrap;
+    transition:opacity .25s var(--ease),max-height .3s var(--ease),margin .25s var(--ease),transform .25s var(--ease);
+    overflow:hidden;max-height:60px;
+  }
+  .lbl-stem{font-family:'Orbitron',sans-serif;color:var(--blue);font-size:30px;letter-spacing:2.5px;}
+  .lbl-art{font-family:'Playfair Display',Georgia,serif;color:var(--gold);font-size:34px;letter-spacing:1.2px;}
+  .lbl-hum{font-family:'Playfair Display',Georgia,serif;color:var(--green);font-size:24px;letter-spacing:2px;text-transform:uppercase;}
+  .lbl-work{font-family:Inter,system-ui,sans-serif;color:var(--white);font-size:18px;letter-spacing:3px;line-height:1.25;text-transform:uppercase;}
+
+  .fig-btn{
+    margin-top:10px;
+    padding:10px 22px;
+    border:1px solid transparent;
+    border-radius:999px;
+    background:var(--accent);
+    color:#fff;
+    font-weight:800;
+    font-size:11px;
+    letter-spacing:1.1px;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:transform .2s,box-shadow .2s,background .35s,color .35s,border-color .35s;
+  }
+  .fig-btn:hover,.fig-btn:focus-visible{transform:translateY(-1px);box-shadow:0 14px 34px var(--accent-soft);outline:none;}
+  .fig:focus-within .fig-btn{transform:translateY(-1px);box-shadow:0 14px 34px var(--accent-soft);}
+
+  .dots{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:16px;}
+  .dot{
+    width:8px;height:8px;border-radius:999px;
+    border:0;background:rgba(255,255,255,.22);
+    cursor:pointer;
+    transition:width .25s var(--ease),background .25s,box-shadow .25s;
+  }
+  .dot.active{width:28px;background:var(--accent);box-shadow:0 0 22px var(--accent-soft);}
+  .dot:focus-visible{outline:2px solid var(--accent);outline-offset:4px;}
+
+  .scroll-hint{
+    margin:18px auto 0;
+    text-align:center;
+    color:rgba(255,255,255,.42);
+    font-size:12px;
+    letter-spacing:1.4px;
+    text-transform:uppercase;
+  }
+
+  .expand-panel{
+    width:100vw;
+    margin-left:50%;
+    transform:translateX(-50%);
+    max-height:0;
+    overflow:hidden;
+    opacity:0;
+    transition:max-height .75s var(--ease),opacity .45s var(--ease);
+  }
+  .expand-panel.open{max-height:3600px;opacity:1;}
+  .panel-inner{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:44px clamp(18px,4vw,34px) 60px;
+    border-top:1px solid var(--accent-line);
+  }
+  .section-kicker{
+    color:var(--accent);
+    font-family:'Share Tech Mono',monospace;
+    font-size:12px;
+    letter-spacing:2.4px;
+    text-transform:uppercase;
+    margin-bottom:8px;
+  }
+  .sec-title{
+    font-family:var(--display-font);
+    font-size:clamp(28px,4.6vw,50px);
+    line-height:1.05;
+    letter-spacing:1.4px;
+    margin-bottom:14px;
+    color:var(--white);
+  }
+  .sec-lead{
+    color:rgba(255,255,255,.66);
+    max-width:720px;
+    margin-bottom:26px;
+    font-size:15px;
+  }
+  .content-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;align-items:start;}
+  .stack{display:grid;gap:14px;}
+  .card{
+    position:relative;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:18px;
+    background:rgba(255,255,255,.045);
+    padding:20px;
+    box-shadow:0 18px 55px rgba(0,0,0,.16);
+    transition:border-color .3s var(--ease),background .3s var(--ease),transform .25s var(--ease),box-shadow .3s var(--ease);
+  }
+  .card::before{content:"";position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .35s var(--ease),background .35s var(--ease);}
+  .card:hover{transform:translateY(-2px);border-color:var(--accent-line);background:rgba(255,255,255,.058);}
+  .card h3{position:relative;z-index:1;color:var(--white);font-size:15px;letter-spacing:.8px;margin-bottom:8px;}
+  .card p{position:relative;z-index:1;color:rgba(255,255,255,.64);font-size:14px;line-height:1.7;}
+  .tags{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+  .tag{display:inline-flex;align-items:center;border:1px solid var(--accent-line);background:var(--accent-soft);color:color-mix(in srgb,var(--accent) 82%,white);border-radius:999px;padding:4px 9px;font-size:11px;font-weight:700;letter-spacing:.6px;}
+  .feature-card{min-height:100%;}
+  .feature-card .mini-title{color:var(--accent);font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;}
+  .metric-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px;}
+  .metric{border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:13px;background:rgba(255,255,255,.035);}
+  .metric strong{display:block;font-size:20px;color:var(--white);}
+  .metric span{display:block;color:rgba(255,255,255,.52);font-size:12px;margin-top:2px;}
+
+  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;}
+  .paint-slot{aspect-ratio:4/3;border-radius:14px;overflow:hidden;border:1px solid rgba(245,200,66,.24);background:#16120b;transition:transform .25s,border-color .25s,box-shadow .25s;}
+  .paint-slot:hover{transform:translateY(-3px);border-color:rgba(245,200,66,.55);box-shadow:0 18px 45px rgba(0,0,0,.22);}
+  .paint-slot svg{width:100%;height:100%;display:block;}
+
+  .about-section,.footer{
+    width:100vw;
+    margin-left:50%;
+    transform:translateX(-50%);
+    border-top:1px solid rgba(255,255,255,.08);
+  }
+  .about-inner,.footer-inner{max-width:var(--max);margin:0 auto;padding:54px clamp(18px,4vw,34px);}
+  .about-layout{display:grid;grid-template-columns:.75fr 1.25fr;gap:28px;align-items:start;}
+  .about-title{font-family:'Orbitron',sans-serif;font-size:clamp(22px,3vw,34px);letter-spacing:2px;text-transform:uppercase;}
+  .about-copy{color:rgba(255,255,255,.68);font-size:15px;line-height:1.85;}
+  .about-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;}
+  .chip{border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:7px 10px;color:rgba(255,255,255,.70);font-size:12px;background:rgba(255,255,255,.035);}
+  .footer-inner{display:flex;justify-content:space-between;gap:18px;align-items:center;color:rgba(255,255,255,.52);font-size:13px;padding-top:28px;padding-bottom:34px;}
+  .footer-links{display:flex;gap:12px;flex-wrap:wrap;}
+  .footer-links a{color:rgba(255,255,255,.62);text-decoration:none;}
+  .footer-links a:hover{color:#fff;}
+
+
+  /* CV-INTEGRATED CONTENT HELPERS */
+  .bullet-list{position:relative;z-index:1;display:grid;gap:8px;margin-top:12px;color:rgba(255,255,255,.66);font-size:14px;line-height:1.65;padding-left:18px;}
+  .bullet-list li::marker{color:var(--accent);}
+  .cv-mini-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px;}
+  .cv-mini{border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px;background:rgba(255,255,255,.035);}
+  .cv-mini strong{display:block;color:var(--white);font-size:13px;margin-bottom:3px;}
+  .cv-mini span{display:block;color:rgba(255,255,255,.56);font-size:12px;line-height:1.45;}
+  .contact-card{display:grid;gap:9px;margin-top:14px;}
+  .contact-card a{display:flex;align-items:center;gap:10px;text-decoration:none;color:rgba(255,255,255,.68);border:1px solid rgba(255,255,255,.08);border-radius:13px;padding:10px 12px;background:rgba(255,255,255,.032);transition:background .2s,border-color .2s,color .2s,transform .2s;}
+  .contact-card a:hover,.contact-card a:focus-visible{color:#fff;background:var(--accent-soft);border-color:var(--accent-line);transform:translateY(-1px);outline:none;}
+  .cv-line{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+  .cv-pill{border:1px solid var(--accent-line);background:var(--accent-soft);color:color-mix(in srgb,var(--accent) 82%,white);border-radius:999px;padding:5px 10px;font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;}
+
+  /* PANEL-OPEN CLEANER STATE */
+  body.panel-open .intro,
+  body.panel-open .fig-label,
+  body.panel-open .scroll-hint{
+    opacity:0;
+    max-height:0;
+    margin:0;
+    transform:translateY(-8px);
+    pointer-events:none;
+  }
+  body.panel-open .hero{min-height:auto;padding-top:22px;padding-bottom:8px;}
+  body.panel-open .stage{height:242px;}
+  body.panel-open .fig{bottom:14px;}
+  body.panel-open .avatar{width:138px;height:158px;}
+  body.panel-open .avatar svg{width:134px;height:158px;}
+  body.panel-open .fig-btn{margin-top:6px;}
+
+  /* STEM THEME */
+  body.theme-stem{
+    --accent:var(--blue);
+    --accent-soft:rgba(58,123,213,.14);
+    --accent-line:rgba(58,123,213,.30);
+    --theme-font:'Inter',system-ui,sans-serif;
+    --display-font:'Orbitron',sans-serif;
+  }
+  body.theme-stem::before{
+    background:
+      radial-gradient(circle at 50% 0%,rgba(58,123,213,.16),transparent 36%),
+      radial-gradient(circle at 16% 28%,rgba(168,85,247,.10),transparent 29%),
+      #050509;
+  }
+  body.theme-stem::after{
+    background:
+      linear-gradient(rgba(58,123,213,.045) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(168,85,247,.035) 1px,transparent 1px);
+    background-size:42px 42px;
+    mask-image:linear-gradient(to bottom,rgba(0,0,0,.72),transparent 78%);
+  }
+  body.theme-stem #navbar{background:rgba(4,9,20,.74);border-color:rgba(58,123,213,.22);}
+  body.theme-stem .stage-wrap::before{
+    background:
+      linear-gradient(90deg,rgba(58,123,213,.08),transparent 22%,transparent 78%,rgba(168,85,247,.06)),
+      linear-gradient(rgba(58,123,213,.05) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(58,123,213,.035) 1px,transparent 1px);
+    background-size:auto,34px 34px,34px 34px;
+    border-color:rgba(58,123,213,.08);
+  }
+  body.theme-stem .fig.s-center::after{content:"</>";}
+  body.theme-stem .avatar svg *{fill:#111722;stroke:#263753;}
+  body.theme-stem .fig.s-center .avatar svg *{fill:#101724;stroke:#2f6db8;}
+  body.theme-stem .card{border-radius:12px;background:linear-gradient(155deg,rgba(8,18,35,.54),rgba(8,8,14,.66));}
+  body.theme-stem .card::before{opacity:1;background:linear-gradient(90deg,rgba(58,123,213,.28),transparent 36%) top left/80px 1px no-repeat,linear-gradient(rgba(58,123,213,.24),transparent 54%) top left/1px 56px no-repeat;}
+
+  /* ART THEME */
+  body.theme-art{
+    --accent:var(--gold);
+    --accent-soft:rgba(245,200,66,.13);
+    --accent-line:rgba(245,200,66,.28);
+    --theme-font:'Inter',system-ui,sans-serif;
+    --display-font:'Playfair Display',Georgia,serif;
+  }
+  body.theme-art::before{
+    background:
+      radial-gradient(circle at 48% 0%,rgba(245,200,66,.135),transparent 38%),
+      radial-gradient(circle at 12% 34%,rgba(120,56,24,.17),transparent 32%),
+      linear-gradient(180deg,#090604 0%,#050505 72%);
+  }
+  body.theme-art::after{
+    background:
+      radial-gradient(circle at 8px 8px,rgba(245,200,66,.068) 1.2px,transparent 1.8px),
+      radial-gradient(circle at 28px 28px,rgba(245,200,66,.034) 1.2px,transparent 1.8px);
+    background-size:36px 36px;
+    mask-image:linear-gradient(to bottom,rgba(0,0,0,.64),transparent 78%);
+  }
+  body.theme-art #navbar{background:rgba(20,13,8,.78);border-color:rgba(245,200,66,.22);}
+  body.theme-art .stage-wrap::before{background:radial-gradient(ellipse at 50% 20%,rgba(245,200,66,.11),transparent 38%),linear-gradient(180deg,rgba(68,39,15,.18),rgba(0,0,0,.03));border-color:rgba(245,200,66,.08);}
+  body.theme-art .fig.s-center::after{content:"✦";font-family:'Playfair Display',Georgia,serif;font-size:18px;}
+  body.theme-art .avatar svg *{fill:#16120d;stroke:#322413;}
+  body.theme-art .fig.s-center .avatar svg *{fill:#1b130d;stroke:#90703a;}
+  body.theme-art .fig-btn{font-family:'Playfair Display',Georgia,serif;color:#17110a;letter-spacing:1px;}
+  body.theme-art .card{border-radius:22px 8px 22px 8px;background:linear-gradient(145deg,rgba(65,39,16,.42),rgba(14,10,7,.68));}
+  body.theme-art .card::before{opacity:1;background:radial-gradient(circle at 11px 11px,rgba(245,200,66,.22) 0 2px,transparent 3px),radial-gradient(circle at calc(100% - 11px) calc(100% - 11px),rgba(245,200,66,.17) 0 2px,transparent 3px),repeating-linear-gradient(90deg,rgba(245,200,66,.015) 0 1px,transparent 1px 10px);}
+
+  /* HUMANITIES THEME */
+  body.theme-hum{
+    --accent:var(--green);
+    --accent-soft:rgba(76,255,106,.105);
+    --accent-line:rgba(76,255,106,.25);
+    --theme-font:'Inter',system-ui,sans-serif;
+    --display-font:'Playfair Display',Georgia,serif;
+  }
+  body.theme-hum::before{
+    background:
+      radial-gradient(circle at 50% 0%,rgba(76,255,106,.095),transparent 35%),
+      radial-gradient(circle at 18% 32%,rgba(255,255,255,.035),transparent 30%),
+      linear-gradient(180deg,#050907,#040505 78%);
+  }
+  body.theme-hum::after{
+    background:
+      linear-gradient(rgba(76,255,106,.04) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+    background-size:64px 28px;
+    mask-image:linear-gradient(to bottom,rgba(0,0,0,.58),transparent 78%);
+  }
+  body.theme-hum #navbar{background:rgba(2,15,8,.76);border-color:rgba(76,255,106,.19);}
+  body.theme-hum .stage-wrap::before{background:linear-gradient(90deg,rgba(76,255,106,.08) 0 1px,transparent 1px 92%),repeating-linear-gradient(0deg,transparent 0 27px,rgba(255,255,255,.030) 28px);border-color:rgba(76,255,106,.07);}
+  body.theme-hum .fig.s-center::after{content:"¶";font-family:'Playfair Display',Georgia,serif;font-size:19px;}
+  body.theme-hum .avatar svg *{fill:#101812;stroke:#203624;}
+  body.theme-hum .fig.s-center .avatar svg *{fill:#101a12;stroke:#4e9f58;}
+  body.theme-hum .card{border-radius:8px 18px 18px 8px;border-left:3px solid rgba(76,255,106,.46);background:linear-gradient(90deg,rgba(76,255,106,.060),rgba(255,255,255,.024));}
+  body.theme-hum .card p{font-family:'Playfair Display',Georgia,serif;font-size:15px;}
+  body.theme-hum .card::before{opacity:1;background:repeating-linear-gradient(0deg,transparent 0 27px,rgba(255,255,255,.020) 28px);}
+
+  /* WORK THEME */
+  body.theme-work{
+    --accent:#eef2fa;
+    --accent-soft:rgba(255,255,255,.075);
+    --accent-line:rgba(255,255,255,.18);
+    --theme-font:'Inter',system-ui,sans-serif;
+    --display-font:'Inter',system-ui,sans-serif;
+  }
+  body.theme-work::before{
+    background:
+      radial-gradient(circle at 52% 0%,rgba(255,255,255,.085),transparent 34%),
+      radial-gradient(circle at 16% 30%,rgba(120,140,170,.08),transparent 28%),
+      linear-gradient(180deg,#07080b 0%,#050505 78%);
+  }
+  body.theme-work::after{
+    background:repeating-linear-gradient(120deg,rgba(255,255,255,.032) 0 1px,transparent 1px 24px);
+    mask-image:linear-gradient(to bottom,rgba(0,0,0,.58),transparent 78%);
+  }
+  body.theme-work #navbar{background:rgba(10,12,17,.80);border-color:rgba(255,255,255,.13);}
+  body.theme-work .stage-wrap::before{background:linear-gradient(180deg,rgba(255,255,255,.050),rgba(255,255,255,.016));border-color:rgba(255,255,255,.07);}
+  body.theme-work .fig.s-center::after{content:"CV";font-size:12px;}
+  body.theme-work .avatar svg *{fill:#151820;stroke:#2d3340;}
+  body.theme-work .fig.s-center .avatar svg *{fill:#151820;stroke:#798399;}
+  body.theme-work .card{font-family:Inter,system-ui,sans-serif;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.022));}
+  body.theme-work .card::before{opacity:1;background:linear-gradient(90deg,rgba(255,255,255,.20),transparent 42%) top left/100% 1px no-repeat;}
+
+  @supports not (color:color-mix(in srgb,white,transparent)){
+    .tag{color:var(--white);}
+    .fig.s-center::after{background:rgba(0,0,0,.32);}
+  }
+
+  @media(max-width:780px){
+    :root{--nav-h:58px;}
+    .nav-name{max-width:45vw;font-size:9px;letter-spacing:.9px;}
+    .nav-links{gap:14px;}
+    .contact-trigger{padding:7px 0;font-size:10px;letter-spacing:1px;}
+    .contact-trigger::after{right:14px;}
+    .hero{min-height:auto;padding-top:34px;}
+    .stage{height:286px;padding:0 10px;grid-template-columns:40px minmax(0,1fr) 40px;column-gap:4px;}
+    .viewport{width:100%;}
+    .arr{width:38px;height:38px;font-size:22px;}
+    .fig.s-left{transform:translateX(calc(-50% - 104px)) scale(.56);opacity:.35;}
+    .fig.s-right{transform:translateX(calc(-50% + 104px)) scale(.56);opacity:.35;}
+    .fig.s-far-left,.fig.s-far-right{opacity:0;pointer-events:none;}
+    .avatar{width:138px;height:160px;}
+    .avatar svg{width:136px;height:160px;}
+    .lbl-stem{font-size:24px;}.lbl-art{font-size:29px;}.lbl-hum{font-size:18px;}.lbl-work{font-size:15px;}
+    .content-grid,.about-layout{grid-template-columns:1fr;}
+    .metric-grid{grid-template-columns:1fr 1fr;}
+    .gallery-grid{grid-template-columns:1fr;}
+    .tech-console,.book-page,.exec-card,.exec-lines,.art-caption{display:none;}
+    body.panel-open .stage{height:218px;}
+    body.panel-open .fig.s-left,body.panel-open .fig.s-right{opacity:0;pointer-events:none;}
+    .dropdown{width:190px;}
+    .footer-inner{flex-direction:column;align-items:flex-start;}
+  }
+
+  @media(max-width:430px){
+    .hero-name{font-size:28px;}
+    .hero-sub{font-size:13px;}
+    .stage{height:260px;grid-template-columns:36px minmax(0,1fr) 36px;}
+    .fig.s-left,.fig.s-right{opacity:0;pointer-events:none;}
+    .arr{width:34px;height:34px;}
+    .fig-btn{font-size:10px;padding:9px 16px;}
+    .metric-grid,.cv-mini-grid{grid-template-columns:1fr;}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important;}
+  }
+
+
+  /* TRUE VIEWPORT CENTER FIX
+     The carousel is centered against the full browser window, not against
+     the decorative/theme background or any side visual element. */
+  .stage-wrap{
+    width:100vw;
+    margin-left:calc(50% - 50vw);
+    left:auto;
+    transform:none;
+  }
+  .stage{
+    width:100vw;
+    max-width:none;
+    margin:0;
+    padding:0;
+    height:320px;
+    position:relative;
+    display:block;
+  }
+  .viewport{
+    position:absolute;
+    top:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(720px,calc(100vw - 190px));
+    height:100%;
+    justify-self:auto;
+  }
+  .arr{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    z-index:90;
+    justify-self:auto;
+  }
+  #btnPrev{left:clamp(18px,7vw,120px);}
+  #btnNext{right:clamp(18px,7vw,120px);}
+  .arr:active{transform:translateY(-50%) scale(.94);}
+  body.panel-open .stage{height:242px;}
+  body.panel-open .arr{display:grid;opacity:1;visibility:visible;pointer-events:auto;}
+
+  @media (max-width:720px){
+    .stage{height:286px;}
+    .viewport{width:calc(100vw - 96px);}
+    #btnPrev{left:12px;}
+    #btnNext{right:12px;}
+    body.panel-open .stage{height:218px;}
+  }
+
+  @media (max-width:440px){
+    .viewport{width:calc(100vw - 84px);}
+    #btnPrev{left:8px;}
+    #btnNext{right:8px;}
+  }
+
+
+  .dropdown a.active-lang{
+    color:#fff;
+    background:var(--accent-soft);
+  }
+  .dropdown a.active-lang::after{
+    content:"✓";
+    margin-left:auto;
+    color:var(--accent);
+    font-weight:900;
+  }
+
+</style>
+</head>
+<body class="theme-stem">
+<a class="skip-link" href="#app">Skip to content</a>
+<div class="theme-atmosphere" aria-hidden="true">
+  <div class="atm atm-stem">
+    <svg viewBox="0 0 1200 800" preserveAspectRatio="none">
+      <g fill="none" stroke="rgba(58,123,213,.20)" stroke-width="1">
+        <path d="M80 160 H250 V95 H420"/>
+        <path d="M100 560 H300 V495 H520"/>
+        <path d="M735 140 H900 V220 H1120"/>
+        <path d="M680 650 H900 V585 H1140"/>
+        <circle cx="250" cy="95" r="4" fill="rgba(58,123,213,.25)"/>
+        <circle cx="900" cy="220" r="4" fill="rgba(168,85,247,.22)"/>
+        <circle cx="300" cy="495" r="4" fill="rgba(58,123,213,.25)"/>
+        <circle cx="900" cy="585" r="4" fill="rgba(168,85,247,.22)"/>
+      </g>
+    </svg>
+    <div class="tech-console"><span>system.portfolio / online</span><span>discipline: technology</span><span>mode: precise / focused</span><span>projects: ready_to_view</span></div>
+  </div>
+  <div class="atm atm-art"><div class="art-caption">studio / gallery / process</div></div>
+  <div class="atm atm-hum"><div class="book-page"><span>“Leadership is service.”</span><p>Roles, languages, responsibility, and contact arranged like a personal profile.</p></div><div class="margin-note">leadership / language / contact</div></div>
+  <div class="atm atm-work"><div class="exec-card">selected experience</div><div class="exec-lines"><span></span><span></span><span></span><span></span></div></div>
+</div>
+
+<nav id="navbar" aria-label="Main navigation">
+  <a class="nav-mark" href="#top" aria-label="Back to top">
+    <span class="mark-dot" aria-hidden="true"></span>
+    <span class="nav-name">Maximiliano <span>A.</span> Rodriguez</span>
+  </a>
+  <div class="nav-links">
+    <div class="nav-item">
+      <button class="contact-trigger keep-mobile" id="languageTrigger" type="button" aria-expanded="false" aria-controls="languageMenu" aria-haspopup="true">
+        <span data-nav-language>Language</span>
+        <svg class="chev" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <div class="dropdown" id="languageMenu" aria-labelledby="languageTrigger" aria-hidden="true" inert>
+        <a href="#" data-lang-option="es">🇪🇸 Español</a>
+        <a href="#" data-lang-option="en">🇬🇧 English</a>
+        <a href="#" data-lang-option="zh">🇨🇳 中文</a>
+        <a href="#" data-lang-option="pt">🇵🇹 Português</a>
+        <a href="#" data-lang-option="ja">🇯🇵 日本語</a>
+        <a href="#" data-lang-option="fr">🇫🇷 Français</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="contact-trigger keep-mobile" id="contactTrigger" type="button" aria-expanded="false" aria-controls="contactMenu" aria-haspopup="true">
+        <span data-nav-contact>Contact</span>
+        <svg class="chev" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <div class="dropdown" id="contactMenu" aria-labelledby="contactTrigger" aria-hidden="true" inert>
+        <a href="#" aria-label="Instagram"><span aria-hidden="true">📸</span><span data-contact-label="instagram">Instagram</span></a>
+        <a href="#" aria-label="LinkedIn"><span aria-hidden="true">💼</span><span data-contact-label="linkedin">LinkedIn</span></a>
+        <a href="#" aria-label="WhatsApp"><span aria-hidden="true">💬</span><span data-contact-label="whatsapp">WhatsApp</span></a>
+        <a href="mailto:maximilianoarrdv@gmail.com" aria-label="Email"><span aria-hidden="true">✉️</span><span data-contact-label="email">Email</span></a>
+        <a href="#" aria-label="GitHub"><span aria-hidden="true">🐙</span><span data-contact-label="github">GitHub</span></a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main id="app" tabindex="-1">
+  <section class="hero" id="top" aria-labelledby="portfolio-title">
+    <div class="intro">
+      <div class="eyebrow">Portfolio + CV</div>
+      <h1 class="hero-name" id="portfolio-title">MAXIMILIANO RODRIGUEZ</h1>
+      <p class="hero-sub">IB student at Léman Manhattan focused on technology, programming, robotics, and mechatronics. Choose an area to view: <span class="theme-word" id="themeWord">STEM</span>.</p>
+    </div>
+
+    <div class="stage-wrap" id="themes">
+      <div class="stage">
+        <button class="arr" id="btnPrev" type="button" aria-label="Tema anterior">&#8249;</button>
+        <div class="viewport" id="viewport" aria-live="polite"></div>
+        <button class="arr" id="btnNext" type="button" aria-label="Tema siguiente">&#8250;</button>
+      </div>
+    </div>
+    <div class="dots" id="dots" aria-label="Seleccionar tema"></div>
+    <p class="scroll-hint">Selecciona un área para expandir</p>
+  </section>
+
+  <section class="expand-panel" id="panel-0" aria-hidden="true" inert>
+    <div class="panel-inner">
+      <p class="section-kicker">STEM / Robotics / Programming</p>
+      <h2 class="sec-title">Robotics, code, and technical projects.</h2>
+      <p class="sec-lead">This label is only for technical work: robotics, programming, game-development experiments, controls, testing, and engineering-related skills.</p>
+      <div class="content-grid">
+        <article class="card feature-card">
+          <p class="mini-title">Robotics Project Experience</p>
+          <h3>FTC robot development — Robotics Club</h3>
+          <p>Since 2025, I have participated in robot development for competitions, including FTC. My technical work belongs here because it involves programming movement, testing controls, helping with construction, adjusting the robot, and improving performance with the team.</p>
+          <div class="tags"><span class="tag">Robotics</span><span class="tag">FTC</span><span class="tag">Movement Programming</span><span class="tag">Testing</span></div>
+          <div class="metric-grid"><div class="metric"><strong>2025</strong><span>Robotics Club participation</span></div><div class="metric"><strong>FTC</strong><span>Competition-focused robot work</span></div></div>
+        </article>
+        <div class="stack">
+          <article class="card"><h3>Unity + Unreal Engine projects</h3><p>Personal game-development work belongs under STEM because it is technical project experience. I have built simple functional projects, worked on 2D and 3D movement systems, controls, interaction logic, testing, debugging, and improving mechanics until they work.</p><div class="tags"><span class="tag">Unity</span><span class="tag">Unreal Engine</span><span class="tag">2D / 3D Movement</span><span class="tag">Game Logic</span></div></article>
+          <article class="card"><h3>Technical skills</h3><p>Skills from my CV that belong in the STEM label:</p><ul class="bullet-list"><li>JavaScript and programming fundamentals</li><li>Unity and Unreal Engine</li><li>2D and 3D movement systems</li><li>Testing and adjustment of controls</li><li>Logical thinking and technical problem-solving</li></ul><div class="tags"><span class="tag">JavaScript</span><span class="tag">Controls</span><span class="tag">Debugging</span></div></article>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="expand-panel" id="panel-1" aria-hidden="true" inert>
+    <div class="panel-inner">
+      <p class="section-kicker">Art / Visual Process</p>
+      <h2 class="sec-title">Visual work, composition, and creative process.</h2>
+      <p class="sec-lead">This label is only for visual art and design work. CV items like robotics, languages, grades, or internship goals do not go here.</p>
+      <div class="content-grid">
+        <article class="card feature-card">
+          <p class="mini-title">Featured Artwork</p>
+          <h3>Memento Mori — waiting as time</h3>
+          <p>A visual arts piece about a figure waiting so long that roots begin to grow. It connects time, stillness, nature, and the fear of wasting the present.</p>
+          <div class="tags"><span class="tag">Acrylic</span><span class="tag">Perspective</span><span class="tag">Symbolism</span></div>
+          <div class="gallery-grid" aria-label="Art previews">
+            <div class="paint-slot"><svg viewBox="0 0 160 120"><defs><linearGradient id="a1" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#22150a"/><stop offset="1" stop-color="#0a0908"/></linearGradient></defs><rect width="160" height="120" fill="url(#a1)"/><circle cx="80" cy="42" r="24" fill="#c9a13c" opacity=".28"/><path d="M18 112 C45 82 63 80 80 112 C95 78 122 82 145 112" fill="#2d210f"/><path d="M80 53 V104" stroke="#d9b860" stroke-width="2"/><path d="M80 75 C60 78 55 92 42 105" stroke="#6d5222" fill="none"/></svg></div>
+            <div class="paint-slot"><svg viewBox="0 0 160 120"><rect width="160" height="120" fill="#182030"/><path d="M0 92 C40 74 78 84 160 62 V120 H0" fill="#60451c"/><circle cx="122" cy="28" r="18" fill="#f5c842" opacity=".58"/><path d="M62 84 H96" stroke="#f5c842" opacity=".5"/></svg></div>
+            <div class="paint-slot"><svg viewBox="0 0 160 120"><rect width="160" height="120" fill="#100b0a"/><path d="M80 0 L112 120 H48 Z" fill="#f5c842" opacity=".12"/><circle cx="80" cy="72" r="18" fill="#f5c842" opacity=".25"/><path d="M52 110 Q80 70 108 110" stroke="#f5c842" fill="none" opacity=".5"/></svg></div>
+          </div>
+        </article>
+        <div class="stack">
+          <article class="card"><h3>Sunrise / sunset panel study</h3><p>A multi-canvas exploration of daily time passing through light, color, and repeated composition.</p><div class="tags"><span class="tag">Color</span><span class="tag">Series</span><span class="tag">Time</span></div></article>
+          <article class="card"><h3>Léman campaign poster exploration</h3><p>Poster experiments combining school identity, hands lifting a logo, and leadership-oriented visual storytelling.</p><div class="tags"><span class="tag">Poster</span><span class="tag">Composition</span><span class="tag">Visual Identity</span></div></article>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="expand-panel" id="panel-2" aria-hidden="true" inert>
+    <div class="panel-inner" id="humanities">
+      <p class="section-kicker">Humanities / Leadership / Languages / Contact</p>
+      <h2 class="sec-title">Leadership, communication, and responsibility.</h2>
+      <p class="sec-lead">This label is now for the human side of the CV: leadership roles, languages, community responsibility, communication, and contact. Technical robotics details stay under STEM.</p>
+      <div class="content-grid">
+        <article class="card feature-card">
+          <p class="mini-title">Leadership Profile</p>
+          <h3>Boarding Prefect + Robotics Club Vice President</h3>
+          <p>As a Boarding Prefect, I represent responsibility inside the school community. As Vice President of the Robotics Club, I help lead a team environment where communication, organization, and problem-solving matter just as much as the technical work.</p>
+          <div class="tags"><span class="tag">Boarding Prefect</span><span class="tag">Vice President</span><span class="tag">Responsibility</span><span class="tag">Teamwork</span></div>
+          <div class="metric-grid"><div class="metric"><strong>Leadership</strong><span>Boarding Prefect role</span></div><div class="metric"><strong>Robotics</strong><span>Club Vice President</span></div></div>
+        </article>
+        <div class="stack">
+          <article class="card">
+            <h3>Languages</h3>
+            <p>Languages from my CV belong here because they show communication, culture, and adaptability.</p>
+            <div class="cv-line"><span class="cv-pill">Spanish — Native</span><span class="cv-pill">English — Fluent</span></div>
+          </article>
+          <article class="card">
+            <h3>Community and teamwork</h3>
+            <p>This section highlights the non-technical side of my profile: being reliable in a boarding-school setting, collaborating with peers, taking initiative, and helping solve problems with a team.</p>
+            <ul class="bullet-list"><li>Boarding Prefect</li><li>Vice President of the Robotics Club</li><li>Team-based competition experience</li><li>Adaptability and initiative in learning</li></ul>
+            <div class="tags"><span class="tag">Communication</span><span class="tag">Leadership</span><span class="tag">Adaptability</span></div>
+          </article>
+          <article class="card">
+            <h3>Contact</h3>
+            <p>Best contact for internship, school, or portfolio opportunities.</p>
+            <div class="contact-card">
+              <a href="mailto:maximilianoarrdv@gmail.com">✉️ maximilianoarrdv@gmail.com</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="expand-panel" id="panel-3" aria-hidden="true" inert>
+    <div class="panel-inner" id="work">
+      <p class="section-kicker">CV / Education / Professional Direction</p>
+      <h2 class="sec-title">Education, internship objective, and professional strengths.</h2>
+      <p class="sec-lead">This label now focuses on the formal CV profile: school, IB program, academic path, internship goal, and professional strengths. Leadership, languages, and contact are under Humanities.</p>
+      <div class="content-grid">
+        <article class="card feature-card">
+          <p class="mini-title">Professional Objective</p>
+          <h3>Future mechatronics engineering student</h3>
+          <p>I am a Grade 11 IB student at Léman Manhattan Preparatory School with a strong interest in technology, programming, and engineering. I am looking for an internship where I can develop technical skills, learn from a professional team, and help turn ideas into functional solutions.</p>
+          <div class="cv-mini-grid">
+            <div class="cv-mini"><strong>School</strong><span>Léman Manhattan Preparatory School</span></div>
+            <div class="cv-mini"><strong>Program</strong><span>International Baccalaureate (IB)</span></div>
+            <div class="cv-mini"><strong>Location</strong><span>New York, USA</span></div>
+            <div class="cv-mini"><strong>Graduation</strong><span>June 2027</span></div>
+            <div class="cv-mini"><strong>Current average</strong><span>9.0 / A-</span></div>
+            <div class="cv-mini"><strong>Goal</strong><span>Mechatronics Engineering</span></div>
+          </div>
+        </article>
+        <div class="stack">
+          <article class="card">
+            <h3>Internship direction</h3>
+            <p>I am interested in opportunities where I can keep building technical foundations, observe professional workflows, and contribute curiosity, discipline, and a problem-solving mindset.</p>
+            <div class="tags"><span class="tag">Internship</span><span class="tag">Technology</span><span class="tag">Engineering</span></div>
+          </article>
+          <article class="card">
+            <h3>Professional strengths</h3>
+            <p>Soft skills from the CV that support internship readiness.</p>
+            <ul class="bullet-list"><li>Problem-solving</li><li>Teamwork</li><li>Adaptability</li><li>Logical thinking</li><li>Initiative in learning</li></ul>
+          </article>
+          <article class="card">
+            <h3>Academic profile</h3>
+            <p>High School student in the IB program at Léman Manhattan Preparatory School, expected to graduate in June 2027.</p>
+            <div class="tags"><span class="tag">IB Student</span><span class="tag">Grade 11</span><span class="tag">A- Average</span></div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="about-section" id="about">
+    <div class="about-inner">
+      <div class="about-layout">
+        <h2 class="about-title">About Me</h2>
+        <div>
+          <p class="about-copy">I am a Grade 11 IB student at Léman Manhattan Preparatory School in New York. My portfolio is organized by label: STEM holds robotics and programming; Art holds visual projects; Humanities now highlights leadership, languages, community responsibility, and contact; CV holds education and professional direction.</p>
+          <div class="about-chips"><span class="chip">IB Student</span><span class="chip">Boarding Prefect</span><span class="chip">Robotics VP</span><span class="chip">Bilingual</span><span class="chip">JavaScript</span><span class="chip">Mechatronics</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <p>© 2026 Maximiliano Rodriguez</p>
+    <div class="footer-links"><a href="#top">Top</a><a href="#themes">Themes</a><a href="#about">About</a><a href="mailto:maximilianoarrdv@gmail.com">Email</a></div>
+  </div>
+</footer>
+
+<script>
+  const CONTACTS = [
+    {key:'instagram', icon:'📸', href:'#'},
+    {key:'linkedin', icon:'💼', href:'#'},
+    {key:'whatsapp', icon:'💬', href:'#'},
+    {key:'email', icon:'✉️', href:'mailto:maximilianoarrdv@gmail.com'},
+    {key:'github', icon:'🐙', href:'#'}
+  ];
+
+  const COPY = {
+    en:{
+      lang:'en',
+      title:'Maximiliano Rodriguez | Portfolio',
+      nav:{language:'Language',contact:'Contact',backTop:'Back to top',main:'Main navigation',skip:'Skip to content'},
+      contact:{instagram:'Instagram',linkedin:'LinkedIn',whatsapp:'WhatsApp',email:'Email',github:'GitHub'},
+      atmosphere:{
+        tech:['system.portfolio / online','discipline: technology','mode: precise / focused','projects: ready_to_view'],
+        art:'studio / gallery / process',
+        humQuote:'“Leadership is service.”',
+        humText:'Roles, languages, responsibility, and contact arranged like a personal profile.',
+        humNote:'leadership / language / contact',
+        work:'selected experience'
+      },
+      sections:[
+        {label:'STEM',theme:'theme-stem',word:'STEM',btnText:'View STEM Projects',labelClass:'lbl-stem',dotColor:'var(--blue)'},
+        {label:'ART',theme:'theme-art',word:'Art',btnText:'Explore Art Portfolio',labelClass:'lbl-art',dotColor:'var(--gold)'},
+        {label:'HUMANITÉS',theme:'theme-hum',word:'Leadership',btnText:'View Leadership Profile',labelClass:'lbl-hum',dotColor:'var(--green)'},
+        {label:'WORK',theme:'theme-work',word:'Work Profile',btnText:'View Work Profile',labelClass:'lbl-work',dotColor:'var(--white)'}
+      ],
+      hero:{
+        eyebrow:'Portfolio + CV',
+        subStart:'IB student at Léman Manhattan focused on technology, programming, robotics, and mechatronics. Choose an area to view:',
+        subEnd:'.',
+        hint:'Select an area to expand',
+        prev:'Previous theme',
+        next:'Next theme',
+        dots:'Select theme',
+        dot:'Select '
+      },
+      stem:{
+        kicker:'STEM / Robotics / Programming',
+        title:'Robotics, code, and technical projects.',
+        lead:'This label is only for technical work: robotics, programming, game-development experiments, controls, testing, and engineering-related skills.',
+        featureMini:'Robotics Project Experience',
+        featureTitle:'FTC robot development — Robotics Club',
+        featureText:'Since 2025, I have participated in robot development for competitions, including FTC. My technical work belongs here because it involves programming movement, testing controls, helping with construction, adjusting the robot, and improving performance with the team.',
+        tags:['Robotics','FTC','Movement Programming','Testing'],
+        metrics:[['2025','Robotics Club participation'],['FTC','Competition-focused robot work']],
+        cards:[
+          {title:'Unity + Unreal Engine projects',text:'Personal game-development work belongs under STEM because it is technical project experience. I have built simple functional projects, worked on 2D and 3D movement systems, controls, interaction logic, testing, debugging, and improving mechanics until they work.',tags:['Unity','Unreal Engine','2D / 3D Movement','Game Logic']},
+          {title:'Technical skills',text:'Skills from my CV that belong in the STEM label:',list:['JavaScript and programming fundamentals','Unity and Unreal Engine','2D and 3D movement systems','Testing and adjustment of controls','Logical thinking and technical problem-solving'],tags:['JavaScript','Controls','Debugging']}
+        ]
+      },
+      art:{
+        kicker:'Art / Visual Process',
+        title:'Visual work, composition, and creative process.',
+        lead:'This label is only for visual art and design work. CV items like robotics, languages, grades, or internship goals do not go here.',
+        featureMini:'Featured Artwork',
+        featureTitle:'Memento Mori — waiting as time',
+        featureText:'A visual arts piece about a figure waiting so long that roots begin to grow. It connects time, stillness, nature, and the fear of wasting the present.',
+        tags:['Acrylic','Perspective','Symbolism'],
+        galleryLabel:'Art previews',
+        cards:[
+          {title:'Sunrise / sunset panel study',text:'A multi-canvas exploration of daily time passing through light, color, and repeated composition.',tags:['Color','Series','Time']},
+          {title:'Léman campaign poster exploration',text:'Poster experiments combining school identity, hands lifting a logo, and leadership-oriented visual storytelling.',tags:['Poster','Composition','Visual Identity']}
+        ]
+      },
+      hum:{
+        kicker:'Humanities / Leadership / Languages / Contact',
+        title:'Leadership, communication, and responsibility.',
+        lead:'This label is for the human side of my profile: leadership roles, languages, community responsibility, communication, and contact.',
+        featureMini:'Leadership Profile',
+        featureTitle:'Boarding Prefect + Robotics Club Vice President',
+        featureText:'As a Boarding Prefect, I represent responsibility inside the school community. As Vice President of the Robotics Club, I help lead a team environment where communication, organization, and problem-solving matter just as much as the technical work.',
+        tags:['Boarding Prefect','Vice President','Responsibility','Teamwork'],
+        metrics:[['Leadership','Boarding Prefect role'],['Robotics','Club Vice President']],
+        langTitle:'Languages',
+        langText:'Languages from my CV belong here because they show communication, culture, and adaptability.',
+        langPills:['Spanish — Native','English — Fluent'],
+        communityTitle:'Community and teamwork',
+        communityText:'This section highlights the non-technical side of my profile: being reliable in a boarding-school setting, collaborating with peers, taking initiative, and helping solve problems with a team.',
+        communityList:['Boarding Prefect','Vice President of the Robotics Club','Team-based competition experience','Adaptability and initiative in learning'],
+        communityTags:['Communication','Leadership','Adaptability'],
+        contactTitle:'Contact',
+        contactText:'Portfolio and professional contact options.'
+      },
+      work:{
+        kicker:'Work / Education / Professional Direction',
+        title:'Education, internship objective, and professional strengths.',
+        lead:'This label focuses on the formal profile: school, IB program, academic path, internship goal, and professional strengths. Leadership, languages, and social contact stay under Humanities.',
+        featureMini:'Professional Objective',
+        featureTitle:'Future mechatronics engineering student',
+        featureText:'I am a Grade 11 IB student at Léman Manhattan Preparatory School with a strong interest in technology, programming, and engineering. I am looking for an internship where I can develop technical skills, learn from a professional team, and help turn ideas into functional solutions.',
+        cvMini:[['School','Léman Manhattan Preparatory School'],['Program','International Baccalaureate (IB)'],['Location','New York, USA'],['Graduation','June 2027'],['Current average','9.0 / A-'],['Goal','Mechatronics Engineering']],
+        cards:[
+          {title:'Internship direction',text:'I am interested in opportunities where I can keep building technical foundations, observe professional workflows, and contribute curiosity, discipline, and a problem-solving mindset.',tags:['Internship','Technology','Engineering']},
+          {title:'Professional strengths',text:'Soft skills from the CV that support internship readiness.',list:['Problem-solving','Teamwork','Adaptability','Logical thinking','Initiative in learning']},
+          {title:'Academic profile',text:'High School student in the IB program at Léman Manhattan Preparatory School, expected to graduate in June 2027.',tags:['IB Student','Grade 11','A- Average']}
+        ]
+      },
+      about:{
+        title:'About Me',
+        copy:'I am a Grade 11 IB student at Léman Manhattan Preparatory School in New York. My portfolio is organized by label: STEM holds robotics and programming; Art holds visual projects; Humanities highlights leadership, languages, community responsibility, and contact; Work holds education and professional direction.',
+        chips:['IB Student','Boarding Prefect','Robotics VP','Bilingual','JavaScript','Mechatronics']
+      },
+      footer:{top:'Top',themes:'Themes',about:'About',email:'Email'}
+    },
+
+    es:{
+      lang:'es',
+      title:'Maximiliano Rodríguez | Portafolio',
+      nav:{language:'Idioma',contact:'Contacto',backTop:'Volver al inicio',main:'Navegación principal',skip:'Saltar al contenido'},
+      contact:{instagram:'Instagram',linkedin:'LinkedIn',whatsapp:'WhatsApp',email:'Correo',github:'GitHub'},
+      atmosphere:{
+        tech:['sistema.portafolio / en línea','disciplina: tecnología','modo: preciso / enfocado','proyectos: listos_para_ver'],
+        art:'estudio / galería / proceso',
+        humQuote:'“Liderar es servir.”',
+        humText:'Roles, idiomas, responsabilidad y contacto organizados como perfil personal.',
+        humNote:'liderazgo / idioma / contacto',
+        work:'experiencia seleccionada'
+      },
+      sections:[
+        {label:'STEM',theme:'theme-stem',word:'STEM',btnText:'Ver proyectos STEM',labelClass:'lbl-stem',dotColor:'var(--blue)'},
+        {label:'ARTE',theme:'theme-art',word:'Arte',btnText:'Explorar portafolio de arte',labelClass:'lbl-art',dotColor:'var(--gold)'},
+        {label:'HUMANIDADES',theme:'theme-hum',word:'Liderazgo',btnText:'Ver perfil de liderazgo',labelClass:'lbl-hum',dotColor:'var(--green)'},
+        {label:'PERFIL',theme:'theme-work',word:'Perfil profesional',btnText:'Ver perfil profesional',labelClass:'lbl-work',dotColor:'var(--white)'}
+      ],
+      hero:{
+        eyebrow:'Portafolio + CV',
+        subStart:'Estudiante IB en Léman Manhattan enfocado en tecnología, programación, robótica y mecatrónica. Elige un área para ver:',
+        subEnd:'.',
+        hint:'Selecciona un área para expandir',
+        prev:'Tema anterior',
+        next:'Tema siguiente',
+        dots:'Seleccionar tema',
+        dot:'Seleccionar '
+      },
+      stem:{
+        kicker:'STEM / Robótica / Programación',
+        title:'Robótica, código y proyectos técnicos.',
+        lead:'Esta sección es solo para trabajo técnico: robótica, programación, experimentos de desarrollo de videojuegos, controles, pruebas y habilidades relacionadas con ingeniería.',
+        featureMini:'Experiencia en proyectos de robótica',
+        featureTitle:'Desarrollo de robot FTC — Robotics Club',
+        featureText:'Desde 2025 participo en el desarrollo de robots para competencias, incluyendo FTC. Este trabajo técnico pertenece aquí porque incluye programar movimiento, probar controles, apoyar en construcción, ajustar el robot y mejorar su desempeño con el equipo.',
+        tags:['Robótica','FTC','Programación de movimiento','Pruebas'],
+        metrics:[['2025','Participación en Robotics Club'],['FTC','Trabajo de robot para competencia']],
+        cards:[
+          {title:'Proyectos en Unity + Unreal Engine',text:'Mi trabajo personal de desarrollo de videojuegos pertenece a STEM porque es experiencia técnica. He creado proyectos funcionales simples, trabajado con sistemas de movimiento 2D y 3D, controles, lógica de interacción, pruebas, debugging y mejora de mecánicas hasta que funcionan.',tags:['Unity','Unreal Engine','Movimiento 2D / 3D','Lógica de juego']},
+          {title:'Habilidades técnicas',text:'Habilidades de mi CV que pertenecen a STEM:',list:['JavaScript y fundamentos de programación','Unity y Unreal Engine','Sistemas de movimiento 2D y 3D','Pruebas y ajuste de controles','Pensamiento lógico y resolución técnica de problemas'],tags:['JavaScript','Controles','Debugging']}
+        ]
+      },
+      art:{
+        kicker:'Arte / Proceso visual',
+        title:'Trabajo visual, composición y proceso creativo.',
+        lead:'Esta sección es solo para arte visual y diseño. Elementos del CV como robótica, idiomas, promedio u objetivo de pasantía no van aquí.',
+        featureMini:'Obra destacada',
+        featureTitle:'Memento Mori — la espera como tiempo',
+        featureText:'Una pieza de artes visuales sobre una figura que espera tanto que le empiezan a crecer raíces. Conecta tiempo, quietud, naturaleza y el miedo de desperdiciar el presente.',
+        tags:['Acrílico','Perspectiva','Simbolismo'],
+        galleryLabel:'Vistas previas de arte',
+        cards:[
+          {title:'Estudio en paneles de amanecer / atardecer',text:'Exploración en varios lienzos sobre el paso diario del tiempo mediante luz, color y composición repetida.',tags:['Color','Serie','Tiempo']},
+          {title:'Exploración de póster de campaña Léman',text:'Experimentos de póster combinando identidad escolar, manos levantando un logo y narración visual orientada al liderazgo.',tags:['Póster','Composición','Identidad visual']}
+        ]
+      },
+      hum:{
+        kicker:'Humanities / Liderazgo / Idiomas / Contacto',
+        title:'Liderazgo, comunicación y responsabilidad.',
+        lead:'Esta sección es para el lado humano de mi perfil: roles de liderazgo, idiomas, responsabilidad comunitaria, comunicación y contacto.',
+        featureMini:'Perfil de liderazgo',
+        featureTitle:'Boarding Prefect + Vicepresidente de Robotics Club',
+        featureText:'Como Boarding Prefect, represento responsabilidad dentro de la comunidad escolar. Como vicepresidente de Robotics Club, ayudo a liderar un ambiente de equipo donde la comunicación, la organización y la resolución de problemas importan tanto como el trabajo técnico.',
+        tags:['Boarding Prefect','Vicepresidente','Responsabilidad','Trabajo en equipo'],
+        metrics:[['Liderazgo','Rol de Boarding Prefect'],['Robótica','Vicepresidente del club']],
+        langTitle:'Idiomas',
+        langText:'Los idiomas de mi CV pertenecen aquí porque muestran comunicación, cultura y adaptabilidad.',
+        langPills:['Español — Nativo','Inglés — Fluido'],
+        communityTitle:'Comunidad y trabajo en equipo',
+        communityText:'Esta sección muestra el lado no técnico de mi perfil: ser confiable en un entorno boarding, colaborar con compañeros, tomar iniciativa y ayudar a resolver problemas con un equipo.',
+        communityList:['Boarding Prefect','Vicepresidente de Robotics Club','Experiencia en competencias de equipo','Adaptabilidad e iniciativa de aprendizaje'],
+        communityTags:['Comunicación','Liderazgo','Adaptabilidad'],
+        contactTitle:'Contacto',
+        contactText:'Opciones de contacto para portafolio y oportunidades profesionales.'
+      },
+      work:{
+        kicker:'Work / Educación / Dirección profesional',
+        title:'Educación, objetivo de pasantía y fortalezas profesionales.',
+        lead:'Esta sección se enfoca en el perfil formal: escuela, programa IB, trayectoria académica, objetivo de pasantía y fortalezas profesionales. Liderazgo, idiomas y contacto social están en Humanities.',
+        featureMini:'Objetivo profesional',
+        featureTitle:'Futuro estudiante de ingeniería mecatrónica',
+        featureText:'Soy estudiante de 11.º grado en Léman Manhattan Preparatory School, con fuerte interés en tecnología, programación e ingeniería. Busco una pasantía donde pueda desarrollar habilidades técnicas, aprender de un equipo profesional y ayudar a convertir ideas en soluciones funcionales.',
+        cvMini:[['Escuela','Léman Manhattan Preparatory School'],['Programa','Bachillerato Internacional (IB)'],['Ubicación','Nueva York, EE. UU.'],['Graduación','Junio de 2027'],['Promedio actual','9.0 / A-'],['Meta','Ingeniería Mecatrónica']],
+        cards:[
+          {title:'Dirección de pasantía',text:'Me interesan oportunidades donde pueda seguir construyendo bases técnicas, observar flujos de trabajo profesionales y aportar curiosidad, disciplina y mentalidad de resolución de problemas.',tags:['Pasantía','Tecnología','Ingeniería']},
+          {title:'Fortalezas profesionales',text:'Habilidades blandas del CV que apoyan mi preparación para una pasantía.',list:['Resolución de problemas','Trabajo en equipo','Adaptabilidad','Pensamiento lógico','Iniciativa de aprendizaje']},
+          {title:'Perfil académico',text:'Estudiante de High School en el programa IB de Léman Manhattan Preparatory School, con graduación esperada en junio de 2027.',tags:['Estudiante IB','11.º grado','Promedio A-']}
+        ]
+      },
+      about:{
+        title:'Sobre mí',
+        copy:'Soy estudiante de 11.º grado del Programa IB en Léman Manhattan Preparatory School en Nueva York. Mi portafolio está organizado por áreas: STEM contiene robótica y programación; Arte contiene proyectos visuales; Humanities destaca liderazgo, idiomas, responsabilidad comunitaria y contacto; Work contiene educación y dirección profesional.',
+        chips:['Estudiante IB','Boarding Prefect','VP de Robótica','Bilingüe','JavaScript','Mecatrónica']
+      },
+      footer:{top:'Inicio',themes:'Temas',about:'Sobre mí',email:'Correo'}
+    },
+
+    pt:{
+      lang:'pt',
+      title:'Maximiliano Rodriguez | Portfólio',
+      nav:{language:'Idioma',contact:'Contato',backTop:'Voltar ao início',main:'Navegação principal',skip:'Pular para o conteúdo'},
+      contact:{instagram:'Instagram',linkedin:'LinkedIn',whatsapp:'WhatsApp',email:'E-mail',github:'GitHub'},
+      atmosphere:{
+        tech:['sistema.portfólio / online','disciplina: tecnologia','modo: preciso / focado','projetos: prontos_para_ver'],
+        art:'estúdio / galeria / processo',
+        humQuote:'“Liderar é servir.”',
+        humText:'Funções, idiomas, responsabilidade e contato organizados como perfil pessoal.',
+        humNote:'liderança / idioma / contato',
+        work:'experiência selecionada'
+      },
+      sections:[
+        {label:'STEM',theme:'theme-stem',word:'STEM',btnText:'Ver projetos STEM',labelClass:'lbl-stem',dotColor:'var(--blue)'},
+        {label:'ARTE',theme:'theme-art',word:'Arte',btnText:'Explorar portfólio de arte',labelClass:'lbl-art',dotColor:'var(--gold)'},
+        {label:'HUMANIDADES',theme:'theme-hum',word:'Liderança',btnText:'Ver perfil de liderança',labelClass:'lbl-hum',dotColor:'var(--green)'},
+        {label:'PERFIL',theme:'theme-work',word:'Perfil profissional',btnText:'Ver perfil profissional',labelClass:'lbl-work',dotColor:'var(--white)'}
+      ],
+      hero:{
+        eyebrow:'Portfólio + CV',
+        subStart:'Estudante do IB na Léman Manhattan com foco em tecnologia, programação, robótica e mecatrônica. Escolha uma área para ver:',
+        subEnd:'.',
+        hint:'Selecione uma área para expandir',
+        prev:'Tema anterior',
+        next:'Próximo tema',
+        dots:'Selecionar tema',
+        dot:'Selecionar '
+      },
+      stem:{
+        kicker:'STEM / Robótica / Programação',
+        title:'Robótica, código e projetos técnicos.',
+        lead:'Esta seção é apenas para trabalho técnico: robótica, programação, experimentos de desenvolvimento de jogos, controles, testes e habilidades relacionadas à engenharia.',
+        featureMini:'Experiência em projetos de robótica',
+        featureTitle:'Desenvolvimento de robô FTC — Robotics Club',
+        featureText:'Desde 2025, participo do desenvolvimento de robôs para competições, incluindo FTC. Esse trabalho técnico pertence aqui porque envolve programação de movimento, testes de controles, apoio na construção, ajustes do robô e melhoria de desempenho com a equipe.',
+        tags:['Robótica','FTC','Programação de movimento','Testes'],
+        metrics:[['2025','Participação no Robotics Club'],['FTC','Trabalho de robô para competição']],
+        cards:[
+          {title:'Projetos em Unity + Unreal Engine',text:'Meu trabalho pessoal de desenvolvimento de jogos pertence a STEM porque é experiência técnica. Criei projetos funcionais simples e trabalhei com movimento 2D e 3D, controles, lógica de interação, testes, depuração e melhoria de mecânicas até funcionarem.',tags:['Unity','Unreal Engine','Movimento 2D / 3D','Lógica de jogo']},
+          {title:'Habilidades técnicas',text:'Habilidades do meu CV que pertencem a STEM:',list:['JavaScript e fundamentos de programação','Unity e Unreal Engine','Sistemas de movimento 2D e 3D','Testes e ajuste de controles','Pensamento lógico e resolução técnica de problemas'],tags:['JavaScript','Controles','Depuração']}
+        ]
+      },
+      art:{
+        kicker:'Arte / Processo visual',
+        title:'Trabalho visual, composição e processo criativo.',
+        lead:'Esta seção é apenas para arte visual e design. Itens do CV como robótica, idiomas, notas ou objetivo de estágio não entram aqui.',
+        featureMini:'Obra em destaque',
+        featureTitle:'Memento Mori — a espera como tempo',
+        featureText:'Uma peça de artes visuais sobre uma figura que espera por tanto tempo que raízes começam a crescer. Conecta tempo, quietude, natureza e o medo de desperdiçar o presente.',
+        tags:['Acrílico','Perspectiva','Simbolismo'],
+        galleryLabel:'Pré-visualizações de arte',
+        cards:[
+          {title:'Estudo em painéis de nascer / pôr do sol',text:'Exploração em várias telas sobre a passagem diária do tempo por meio de luz, cor e composição repetida.',tags:['Cor','Série','Tempo']},
+          {title:'Exploração de pôster de campanha Léman',text:'Experimentos de pôster combinando identidade escolar, mãos levantando um logotipo e narrativa visual ligada à liderança.',tags:['Pôster','Composição','Identidade visual']}
+        ]
+      },
+      hum:{
+        kicker:'Humanities / Liderança / Idiomas / Contato',
+        title:'Liderança, comunicação e responsabilidade.',
+        lead:'Esta seção é para o lado humano do meu perfil: funções de liderança, idiomas, responsabilidade comunitária, comunicação e contato.',
+        featureMini:'Perfil de liderança',
+        featureTitle:'Boarding Prefect + Vice-presidente do Robotics Club',
+        featureText:'Como Boarding Prefect, represento responsabilidade dentro da comunidade escolar. Como vice-presidente do Robotics Club, ajudo a liderar um ambiente de equipe onde comunicação, organização e resolução de problemas importam tanto quanto o trabalho técnico.',
+        tags:['Boarding Prefect','Vice-presidente','Responsabilidade','Trabalho em equipe'],
+        metrics:[['Liderança','Função de Boarding Prefect'],['Robótica','Vice-presidente do clube']],
+        langTitle:'Idiomas',
+        langText:'Os idiomas do meu CV pertencem aqui porque mostram comunicação, cultura e adaptabilidade.',
+        langPills:['Espanhol — Nativo','Inglês — Fluente'],
+        communityTitle:'Comunidade e trabalho em equipe',
+        communityText:'Esta seção destaca o lado não técnico do meu perfil: ser confiável no ambiente de boarding, colaborar com colegas, tomar iniciativa e ajudar a resolver problemas em equipe.',
+        communityList:['Boarding Prefect','Vice-presidente do Robotics Club','Experiência em competições de equipe','Adaptabilidade e iniciativa de aprendizagem'],
+        communityTags:['Comunicação','Liderança','Adaptabilidade'],
+        contactTitle:'Contato',
+        contactText:'Opções de contato para portfólio e oportunidades profissionais.'
+      },
+      work:{
+        kicker:'Work / Educação / Direção profissional',
+        title:'Educação, objetivo de estágio e forças profissionais.',
+        lead:'Esta seção foca no perfil formal: escola, programa IB, trajetória acadêmica, objetivo de estágio e forças profissionais. Liderança, idiomas e contato social ficam em Humanities.',
+        featureMini:'Objetivo profissional',
+        featureTitle:'Futuro estudante de engenharia mecatrônica',
+        featureText:'Sou estudante do 11.º ano na Léman Manhattan Preparatory School, com forte interesse em tecnologia, programação e engenharia. Procuro um estágio onde possa desenvolver habilidades técnicas, aprender com uma equipe profissional e ajudar a transformar ideias em soluções funcionais.',
+        cvMini:[['Escola','Léman Manhattan Preparatory School'],['Programa','International Baccalaureate (IB)'],['Localização','Nova York, EUA'],['Formatura','Junho de 2027'],['Média atual','9.0 / A-'],['Meta','Engenharia Mecatrônica']],
+        cards:[
+          {title:'Direção de estágio',text:'Tenho interesse em oportunidades onde possa continuar construindo bases técnicas, observar fluxos profissionais e contribuir com curiosidade, disciplina e mentalidade de resolução de problemas.',tags:['Estágio','Tecnologia','Engenharia']},
+          {title:'Forças profissionais',text:'Habilidades interpessoais do CV que apoiam minha preparação para estágio.',list:['Resolução de problemas','Trabalho em equipe','Adaptabilidade','Pensamento lógico','Iniciativa de aprendizagem']},
+          {title:'Perfil acadêmico',text:'Estudante de High School no programa IB da Léman Manhattan Preparatory School, com formatura esperada para junho de 2027.',tags:['Estudante IB','11.º ano','Média A-']}
+        ]
+      },
+      about:{
+        title:'Sobre mim',
+        copy:'Sou estudante do 11.º ano do IB na Léman Manhattan Preparatory School em Nova York. Meu portfólio é organizado por áreas: STEM contém robótica e programação; Arte contém projetos visuais; Humanities destaca liderança, idiomas, responsabilidade comunitária e contato; Work contém educação e direção profissional.',
+        chips:['Estudante IB','Boarding Prefect','VP de Robótica','Bilíngue','JavaScript','Mecatrônica']
+      },
+      footer:{top:'Início',themes:'Temas',about:'Sobre mim',email:'E-mail'}
+    },
+
+    fr:{
+      lang:'fr',
+      title:'Maximiliano Rodriguez | Portfolio',
+      nav:{language:'Langue',contact:'Contact',backTop:'Retour en haut',main:'Navigation principale',skip:'Aller au contenu'},
+      contact:{instagram:'Instagram',linkedin:'LinkedIn',whatsapp:'WhatsApp',email:'E-mail',github:'GitHub'},
+      atmosphere:{
+        tech:['système.portfolio / en ligne','discipline : technologie','mode : précis / concentré','projets : prêts_à_voir'],
+        art:'atelier / galerie / processus',
+        humQuote:'« Diriger, c’est servir. »',
+        humText:'Rôles, langues, responsabilité et contact organisés comme un profil personnel.',
+        humNote:'leadership / langue / contact',
+        work:'expérience sélectionnée'
+      },
+      sections:[
+        {label:'STEM',theme:'theme-stem',word:'STEM',btnText:'Voir les projets STEM',labelClass:'lbl-stem',dotColor:'var(--blue)'},
+        {label:'ART',theme:'theme-art',word:'Art',btnText:'Explorer le portfolio artistique',labelClass:'lbl-art',dotColor:'var(--gold)'},
+        {label:'HUMANITÉS',theme:'theme-hum',word:'Leadership',btnText:'Voir le profil de leadership',labelClass:'lbl-hum',dotColor:'var(--green)'},
+        {label:'PROFIL',theme:'theme-work',word:'Profil professionnel',btnText:'Voir le profil professionnel',labelClass:'lbl-work',dotColor:'var(--white)'}
+      ],
+      hero:{
+        eyebrow:'Portfolio + CV',
+        subStart:'Élève du programme IB à Léman Manhattan, concentré sur la technologie, la programmation, la robotique et la mécatronique. Choisissez une section :',
+        subEnd:'.',
+        hint:'Sélectionnez une section à ouvrir',
+        prev:'Thème précédent',
+        next:'Thème suivant',
+        dots:'Sélectionner un thème',
+        dot:'Sélectionner '
+      },
+      stem:{
+        kicker:'STEM / Robotique / Programmation',
+        title:'Robotique, code et projets techniques.',
+        lead:'Cette section est réservée au travail technique : robotique, programmation, expériences de développement de jeux, contrôles, tests et compétences liées à l’ingénierie.',
+        featureMini:'Expérience en robotique',
+        featureTitle:'Développement de robot FTC — Robotics Club',
+        featureText:'Depuis 2025, je participe au développement de robots pour des compétitions, notamment FTC. Ce travail technique appartient ici car il implique la programmation du mouvement, les tests de contrôles, la construction, l’ajustement du robot et l’amélioration des performances avec l’équipe.',
+        tags:['Robotique','FTC','Programmation du mouvement','Tests'],
+        metrics:[['2025','Participation au Robotics Club'],['FTC','Travail de robot pour compétition']],
+        cards:[
+          {title:'Projets Unity + Unreal Engine',text:'Mon travail personnel de développement de jeux appartient à STEM car c’est une expérience technique. J’ai créé des projets fonctionnels simples et travaillé sur des systèmes de mouvement 2D et 3D, des contrôles, de la logique d’interaction, des tests, du débogage et l’amélioration des mécaniques.',tags:['Unity','Unreal Engine','Mouvement 2D / 3D','Logique de jeu']},
+          {title:'Compétences techniques',text:'Compétences de mon CV qui appartiennent à STEM :',list:['JavaScript et bases de programmation','Unity et Unreal Engine','Systèmes de mouvement 2D et 3D','Tests et ajustement des contrôles','Pensée logique et résolution technique de problèmes'],tags:['JavaScript','Contrôles','Débogage']}
+        ]
+      },
+      art:{
+        kicker:'Art / Processus visuel',
+        title:'Travail visuel, composition et processus créatif.',
+        lead:'Cette section est réservée aux arts visuels et au design. Les éléments du CV comme la robotique, les langues, les notes ou les objectifs de stage n’y vont pas.',
+        featureMini:'Œuvre mise en avant',
+        featureTitle:'Memento Mori — l’attente comme temps',
+        featureText:'Une œuvre d’arts visuels sur une figure qui attend si longtemps que des racines commencent à pousser. Elle relie le temps, l’immobilité, la nature et la peur de gaspiller le présent.',
+        tags:['Acrylique','Perspective','Symbolisme'],
+        galleryLabel:'Aperçus artistiques',
+        cards:[
+          {title:'Étude en panneaux lever / coucher du soleil',text:'Exploration sur plusieurs toiles du passage quotidien du temps par la lumière, la couleur et la composition répétée.',tags:['Couleur','Série','Temps']},
+          {title:'Exploration d’affiche de campagne Léman',text:'Expériences d’affiche combinant identité scolaire, mains soulevant un logo et narration visuelle axée sur le leadership.',tags:['Affiche','Composition','Identité visuelle']}
+        ]
+      },
+      hum:{
+        kicker:'Humanities / Leadership / Langues / Contact',
+        title:'Leadership, communication et responsabilité.',
+        lead:'Cette section montre le côté humain de mon profil : rôles de leadership, langues, responsabilité communautaire, communication et contact.',
+        featureMini:'Profil de leadership',
+        featureTitle:'Boarding Prefect + Vice-président du Robotics Club',
+        featureText:'En tant que Boarding Prefect, je représente la responsabilité dans la communauté scolaire. Comme vice-président du Robotics Club, j’aide à diriger un environnement d’équipe où la communication, l’organisation et la résolution de problèmes comptent autant que le travail technique.',
+        tags:['Boarding Prefect','Vice-président','Responsabilité','Travail d’équipe'],
+        metrics:[['Leadership','Rôle de Boarding Prefect'],['Robotique','Vice-président du club']],
+        langTitle:'Langues',
+        langText:'Les langues de mon CV appartiennent ici car elles montrent la communication, la culture et l’adaptabilité.',
+        langPills:['Espagnol — Natif','Anglais — Courant'],
+        communityTitle:'Communauté et travail d’équipe',
+        communityText:'Cette section met en valeur le côté non technique de mon profil : être fiable dans un environnement de boarding, collaborer avec les autres, prendre des initiatives et résoudre des problèmes en équipe.',
+        communityList:['Boarding Prefect','Vice-président du Robotics Club','Expérience en compétitions d’équipe','Adaptabilité et initiative d’apprentissage'],
+        communityTags:['Communication','Leadership','Adaptabilité'],
+        contactTitle:'Contact',
+        contactText:'Options de contact pour le portfolio et les opportunités professionnelles.'
+      },
+      work:{
+        kicker:'Work / Éducation / Direction professionnelle',
+        title:'Éducation, objectif de stage et forces professionnelles.',
+        lead:'Cette section se concentre sur le profil formel : école, programme IB, parcours académique, objectif de stage et forces professionnelles. Le leadership, les langues et le contact social restent dans Humanities.',
+        featureMini:'Objectif professionnel',
+        featureTitle:'Futur étudiant en ingénierie mécatronique',
+        featureText:'Je suis élève de 11e année à Léman Manhattan Preparatory School, avec un fort intérêt pour la technologie, la programmation et l’ingénierie. Je cherche un stage où je peux développer des compétences techniques, apprendre d’une équipe professionnelle et transformer des idées en solutions fonctionnelles.',
+        cvMini:[['École','Léman Manhattan Preparatory School'],['Programme','Baccalauréat International (IB)'],['Lieu','New York, États-Unis'],['Diplôme prévu','Juin 2027'],['Moyenne actuelle','9.0 / A-'],['Objectif','Ingénierie mécatronique']],
+        cards:[
+          {title:'Direction de stage',text:'Je m’intéresse aux opportunités où je peux renforcer mes bases techniques, observer des flux de travail professionnels et contribuer avec curiosité, discipline et esprit de résolution de problèmes.',tags:['Stage','Technologie','Ingénierie']},
+          {title:'Forces professionnelles',text:'Compétences générales du CV qui soutiennent ma préparation à un stage.',list:['Résolution de problèmes','Travail d’équipe','Adaptabilité','Pensée logique','Initiative d’apprentissage']},
+          {title:'Profil académique',text:'Élève de High School dans le programme IB à Léman Manhattan Preparatory School, avec une graduation prévue en juin 2027.',tags:['Élève IB','11e année','Moyenne A-']}
+        ]
+      },
+      about:{
+        title:'À propos de moi',
+        copy:'Je suis élève de 11e année du programme IB à Léman Manhattan Preparatory School à New York. Mon portfolio est organisé par sections : STEM contient la robotique et la programmation; Art contient les projets visuels; Humanities met en avant le leadership, les langues, la responsabilité communautaire et le contact; Work contient l’éducation et la direction professionnelle.',
+        chips:['Élève IB','Boarding Prefect','VP Robotique','Bilingue','JavaScript','Mécatronique']
+      },
+      footer:{top:'Haut',themes:'Thèmes',about:'À propos',email:'E-mail'}
+    },
+
+    zh:{
+      lang:'zh',
+      title:'Maximiliano Rodriguez | 作品集',
+      nav:{language:'语言',contact:'联系方式',backTop:'返回顶部',main:'主导航',skip:'跳转到内容'},
+      contact:{instagram:'Instagram',linkedin:'LinkedIn',whatsapp:'WhatsApp',email:'邮箱',github:'GitHub'},
+      atmosphere:{
+        tech:['system.portfolio / online','领域：技术','模式：精准 / 专注','项目：可查看'],
+        art:'工作室 / 画廊 / 过程',
+        humQuote:'“领导就是服务。”',
+        humText:'领导角色、语言、责任和联系方式，像个人档案一样整理。',
+        humNote:'领导力 / 语言 / 联系',
+        work:'精选经历'
+      },
+      sections:[
+        {label:'STEM',theme:'theme-stem',word:'STEM',btnText:'查看 STEM 项目',labelClass:'lbl-stem',dotColor:'var(--blue)'},
+        {label:'ART',theme:'theme-art',word:'艺术',btnText:'查看艺术作品集',labelClass:'lbl-art',dotColor:'var(--gold)'},
+        {label:'人文',theme:'theme-hum',word:'领导力',btnText:'查看领导力档案',labelClass:'lbl-hum',dotColor:'var(--green)'},
+        {label:'职业',theme:'theme-work',word:'职业档案',btnText:'查看职业档案',labelClass:'lbl-work',dotColor:'var(--white)'}
+      ],
+      hero:{
+        eyebrow:'作品集 + 简历',
+        subStart:'Léman Manhattan 的 IB 学生，专注于技术、编程、机器人和机电一体化。选择一个领域查看：',
+        subEnd:'。',
+        hint:'选择一个领域展开',
+        prev:'上一个主题',
+        next:'下一个主题',
+        dots:'选择主题',
+        dot:'选择 '
+      },
+      stem:{
+        kicker:'STEM / 机器人 / 编程',
+        title:'机器人、代码和技术项目。',
+        lead:'这一部分只放技术内容：机器人、编程、游戏开发实验、控制、测试和工程相关技能。',
+        featureMini:'机器人项目经历',
+        featureTitle:'FTC 机器人开发 — Robotics Club',
+        featureText:'自 2025 年起，我参与机器人竞赛项目开发，包括 FTC。这里的技术工作包括编程运动、测试控制、协助搭建、调整机器人，并与团队一起提升表现。',
+        tags:['机器人','FTC','运动编程','测试'],
+        metrics:[['2025','参与 Robotics Club'],['FTC','竞赛机器人项目']],
+        cards:[
+          {title:'Unity + Unreal Engine 项目',text:'我的个人游戏开发项目属于 STEM，因为它们是技术项目经验。我做过简单可运行的项目，练习 2D 和 3D 运动系统、控制、交互逻辑、测试、调试和机制优化。',tags:['Unity','Unreal Engine','2D / 3D 运动','游戏逻辑']},
+          {title:'技术技能',text:'简历中属于 STEM 的技能：',list:['JavaScript 和编程基础','Unity 和 Unreal Engine','2D 和 3D 运动系统','控制测试与调整','逻辑思维和技术问题解决'],tags:['JavaScript','控制','调试']}
+        ]
+      },
+      art:{
+        kicker:'艺术 / 视觉过程',
+        title:'视觉作品、构图和创作过程。',
+        lead:'这一部分只放视觉艺术和设计。机器人、语言、成绩或实习目标等简历内容不放在这里。',
+        featureMini:'精选作品',
+        featureTitle:'Memento Mori — 等待作为时间',
+        featureText:'一件视觉艺术作品，讲述一个人等待太久，身体开始长出根。作品连接时间、静止、自然，以及浪费当下的恐惧。',
+        tags:['丙烯','透视','象征'],
+        galleryLabel:'艺术预览',
+        cards:[
+          {title:'日出 / 日落系列研究',text:'通过光线、颜色和重复构图，用多幅画布探索每天时间的流逝。',tags:['颜色','系列','时间']},
+          {title:'Léman 竞选海报探索',text:'海报实验结合学校身份、托举标志的手，以及以领导力为核心的视觉叙事。',tags:['海报','构图','视觉身份']}
+        ]
+      },
+      hum:{
+        kicker:'Humanities / 领导力 / 语言 / 联系方式',
+        title:'领导力、沟通和责任。',
+        lead:'这一部分展示个人档案中更“人”的一面：领导角色、语言、社区责任、沟通和联系方式。',
+        featureMini:'领导力档案',
+        featureTitle:'Boarding Prefect + Robotics Club 副主席',
+        featureText:'作为 Boarding Prefect，我在学校社区中代表责任感。作为 Robotics Club 副主席，我帮助营造团队环境；沟通、组织和解决问题与技术工作同样重要。',
+        tags:['Boarding Prefect','副主席','责任','团队合作'],
+        metrics:[['领导力','Boarding Prefect 角色'],['机器人','社团副主席']],
+        langTitle:'语言',
+        langText:'简历中的语言能力放在这里，因为它体现沟通、文化和适应能力。',
+        langPills:['西班牙语 — 母语','英语 — 流利'],
+        communityTitle:'社区和团队合作',
+        communityText:'这一部分强调我的非技术能力：在寄宿学校环境中可靠，与同学合作，主动行动，并和团队一起解决问题。',
+        communityList:['Boarding Prefect','Robotics Club 副主席','团队竞赛经验','适应能力和主动学习'],
+        communityTags:['沟通','领导力','适应能力'],
+        contactTitle:'联系方式',
+        contactText:'作品集和职业机会的联系方式。'
+      },
+      work:{
+        kicker:'Work / 教育 / 职业方向',
+        title:'教育、实习目标和职业优势。',
+        lead:'这一部分关注正式档案：学校、IB 项目、学术路径、实习目标和职业优势。领导力、语言和社交联系方式放在 Humanities。',
+        featureMini:'职业目标',
+        featureTitle:'未来机电一体化工程学生',
+        featureText:'我是 Léman Manhattan Preparatory School 的 11 年级 IB 学生，对技术、编程和工程有强烈兴趣。我正在寻找实习机会，希望发展技术技能，向专业团队学习，并把想法变成功能性解决方案。',
+        cvMini:[['学校','Léman Manhattan Preparatory School'],['项目','国际文凭课程（IB）'],['地点','美国纽约'],['毕业时间','2027 年 6 月'],['当前平均成绩','9.0 / A-'],['目标','机电一体化工程']],
+        cards:[
+          {title:'实习方向',text:'我希望获得能继续打牢技术基础、观察专业工作流程，并用好奇心、纪律和解决问题的思维做出贡献的机会。',tags:['实习','技术','工程']},
+          {title:'职业优势',text:'简历中支持实习准备的软技能。',list:['解决问题','团队合作','适应能力','逻辑思维','主动学习']},
+          {title:'学术档案',text:'Léman Manhattan Preparatory School IB 项目的高中学生，预计 2027 年 6 月毕业。',tags:['IB 学生','11 年级','A- 平均']}
+        ]
+      },
+      about:{
+        title:'关于我',
+        copy:'我是纽约 Léman Manhattan Preparatory School 的 11 年级 IB 学生。我的作品集按领域整理：STEM 包含机器人和编程；Art 包含视觉项目；Humanities 强调领导力、语言、社区责任和联系方式；Work 包含教育和职业方向。',
+        chips:['IB 学生','Boarding Prefect','机器人副主席','双语','JavaScript','机电一体化']
+      },
+      footer:{top:'顶部',themes:'主题',about:'关于',email:'邮箱'}
+    },
+
+    ja:{
+      lang:'ja',
+      title:'Maximiliano Rodriguez | ポートフォリオ',
+      nav:{language:'言語',contact:'連絡先',backTop:'トップへ戻る',main:'メインナビゲーション',skip:'コンテンツへ移動'},
+      contact:{instagram:'Instagram',linkedin:'LinkedIn',whatsapp:'WhatsApp',email:'メール',github:'GitHub'},
+      atmosphere:{
+        tech:['system.portfolio / online','分野：テクノロジー','モード：正確 / 集中','プロジェクト：閲覧可能'],
+        art:'スタジオ / ギャラリー / プロセス',
+        humQuote:'「リーダーシップは奉仕である。」',
+        humText:'役割、言語、責任、連絡先を個人プロフィールのように整理。',
+        humNote:'リーダーシップ / 言語 / 連絡',
+        work:'選択された経験'
+      },
+      sections:[
+        {label:'STEM',theme:'theme-stem',word:'STEM',btnText:'STEMプロジェクトを見る',labelClass:'lbl-stem',dotColor:'var(--blue)'},
+        {label:'ART',theme:'theme-art',word:'アート',btnText:'アート作品を見る',labelClass:'lbl-art',dotColor:'var(--gold)'},
+        {label:'人文',theme:'theme-hum',word:'リーダーシップ',btnText:'リーダーシップを見る',labelClass:'lbl-hum',dotColor:'var(--green)'},
+        {label:'職業',theme:'theme-work',word:'職業プロフィール',btnText:'職業プロフィールを見る',labelClass:'lbl-work',dotColor:'var(--white)'}
+      ],
+      hero:{
+        eyebrow:'ポートフォリオ + CV',
+        subStart:'Léman Manhattan のIB生として、テクノロジー、プログラミング、ロボティクス、メカトロニクスに取り組んでいます。表示する分野を選択：',
+        subEnd:'。',
+        hint:'分野を選んで展開',
+        prev:'前のテーマ',
+        next:'次のテーマ',
+        dots:'テーマを選択',
+        dot:'選択 '
+      },
+      stem:{
+        kicker:'STEM / ロボティクス / プログラミング',
+        title:'ロボティクス、コード、技術プロジェクト。',
+        lead:'このセクションは技術的な活動専用です：ロボティクス、プログラミング、ゲーム開発実験、コントロール、テスト、工学関連スキル。',
+        featureMini:'ロボティクス経験',
+        featureTitle:'FTCロボット開発 — Robotics Club',
+        featureText:'2025年から、FTCを含む競技用ロボットの開発に参加しています。動作プログラミング、コントロールのテスト、組み立て支援、調整、チームでの性能改善が含まれます。',
+        tags:['ロボティクス','FTC','動作プログラミング','テスト'],
+        metrics:[['2025','Robotics Club 参加'],['FTC','競技向けロボット制作']],
+        cards:[
+          {title:'Unity + Unreal Engine プロジェクト',text:'個人のゲーム開発は技術経験なのでSTEMに入ります。シンプルな機能プロジェクト、2D/3D移動システム、操作、相互作用ロジック、テスト、デバッグ、メカニクス改善に取り組みました。',tags:['Unity','Unreal Engine','2D / 3D移動','ゲームロジック']},
+          {title:'技術スキル',text:'CVの中でSTEMに属するスキル：',list:['JavaScriptとプログラミング基礎','UnityとUnreal Engine','2D/3D移動システム','コントロールのテストと調整','論理的思考と技術的問題解決'],tags:['JavaScript','コントロール','デバッグ']}
+        ]
+      },
+      art:{
+        kicker:'アート / ビジュアルプロセス',
+        title:'視覚作品、構図、創作プロセス。',
+        lead:'このセクションは視覚芸術とデザイン専用です。ロボティクス、言語、成績、インターン目標などのCV項目はここには入りません。',
+        featureMini:'注目作品',
+        featureTitle:'Memento Mori — 時間としての待つこと',
+        featureText:'長く待ちすぎて根が生え始める人物を描いた作品。時間、静けさ、自然、そして現在を無駄にすることへの恐れを結びつけます。',
+        tags:['アクリル','遠近法','象徴'],
+        galleryLabel:'アートプレビュー',
+        cards:[
+          {title:'日の出 / 日没パネル研究',text:'光、色、反復構図を通して日々の時間の流れを複数キャンバスで探る作品。',tags:['色','シリーズ','時間']},
+          {title:'Léman キャンペーンポスター研究',text:'学校のアイデンティティ、ロゴを持ち上げる手、リーダーシップを意識した視覚的ストーリーを組み合わせたポスター実験。',tags:['ポスター','構図','ビジュアルアイデンティティ']}
+        ]
+      },
+      hum:{
+        kicker:'Humanities / リーダーシップ / 言語 / 連絡先',
+        title:'リーダーシップ、コミュニケーション、責任。',
+        lead:'このセクションはプロフィールの人間的な側面です：リーダーシップ、言語、コミュニティでの責任、コミュニケーション、連絡先。',
+        featureMini:'リーダーシッププロフィール',
+        featureTitle:'Boarding Prefect + Robotics Club 副会長',
+        featureText:'Boarding Prefectとして学校コミュニティ内の責任を担っています。Robotics Club副会長として、技術だけでなくコミュニケーション、組織力、問題解決が重要なチーム環境を支えています。',
+        tags:['Boarding Prefect','副会長','責任','チームワーク'],
+        metrics:[['リーダーシップ','Boarding Prefectの役割'],['ロボティクス','クラブ副会長']],
+        langTitle:'言語',
+        langText:'CVにある言語能力は、コミュニケーション、文化、適応力を示すためここに入ります。',
+        langPills:['スペイン語 — ネイティブ','英語 — 流暢'],
+        communityTitle:'コミュニティとチームワーク',
+        communityText:'このセクションでは、寮生活の環境で信頼されること、仲間との協力、主体性、チームでの問題解決など、非技術的な側面を示します。',
+        communityList:['Boarding Prefect','Robotics Club 副会長','チーム競技経験','適応力と学習への主体性'],
+        communityTags:['コミュニケーション','リーダーシップ','適応力'],
+        contactTitle:'連絡先',
+        contactText:'ポートフォリオや職業機会のための連絡先。'
+      },
+      work:{
+        kicker:'Work / 教育 / 職業方向',
+        title:'教育、インターン目標、職業的強み。',
+        lead:'このセクションは正式なプロフィールに焦点を当てます：学校、IBプログラム、学業の方向性、インターン目標、職業的強み。リーダーシップ、言語、ソーシャル連絡先はHumanitiesにあります。',
+        featureMini:'職業目標',
+        featureTitle:'将来のメカトロニクス工学専攻学生',
+        featureText:'私はLéman Manhattan Preparatory Schoolの11年生IB生で、テクノロジー、プログラミング、工学に強い関心があります。技術スキルを伸ばし、専門チームから学び、アイデアを機能する解決策に変える経験ができるインターンを探しています。',
+        cvMini:[['学校','Léman Manhattan Preparatory School'],['プログラム','国際バカロレア（IB）'],['場所','ニューヨーク、米国'],['卒業予定','2027年6月'],['現在の平均','9.0 / A-'],['目標','メカトロニクス工学']],
+        cards:[
+          {title:'インターン方向',text:'技術的基礎を強化し、プロのワークフローを観察し、好奇心、規律、問題解決の姿勢で貢献できる機会に関心があります。',tags:['インターン','テクノロジー','工学']},
+          {title:'職業的強み',text:'インターン準備を支えるCVのソフトスキル。',list:['問題解決','チームワーク','適応力','論理的思考','学習への主体性']},
+          {title:'学業プロフィール',text:'Léman Manhattan Preparatory SchoolのIBプログラムに在籍する高校生で、2027年6月卒業予定です。',tags:['IB生','11年生','平均A-']}
+        ]
+      },
+      about:{
+        title:'自己紹介',
+        copy:'私はニューヨークのLéman Manhattan Preparatory SchoolでIBプログラムに在籍する11年生です。ポートフォリオは分野別に整理しています：STEMはロボティクスとプログラミング、Artは視覚作品、Humanitiesはリーダーシップ・言語・コミュニティ責任・連絡先、Workは教育と職業方向です。',
+        chips:['IB生','Boarding Prefect','Robotics副会長','バイリンガル','JavaScript','メカトロニクス']
+      },
+      footer:{top:'トップ',themes:'テーマ',about:'自己紹介',email:'メール'}
+    }
+  };
+
+  let currentLang = localStorage.getItem('portfolioLang') || 'en';
+  if(!COPY[currentLang]) currentLang='en';
+
+  const languageTrigger=document.getElementById('languageTrigger');
+  const languageMenu=document.getElementById('languageMenu');
+  const contactTrigger=document.getElementById('contactTrigger');
+  const contactMenu=document.getElementById('contactMenu');
+  const dropdownPairs=[
+    {trigger:languageTrigger,menu:languageMenu},
+    {trigger:contactTrigger,menu:contactMenu}
+  ];
+  const prefersReducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function getMenuItems(menu){
+    return [...menu.querySelectorAll('a')];
+  }
+
+  function setDropdownState(trigger,menu,isOpen){
+    menu.classList.toggle('open',isOpen);
+    trigger.classList.toggle('open',isOpen);
+    trigger.setAttribute('aria-expanded',String(isOpen));
+    menu.setAttribute('aria-hidden',String(!isOpen));
+    if(isOpen) menu.removeAttribute('inert');
+    else menu.setAttribute('inert','');
+  }
+
+  function closeDropdowns(exceptMenu=null){
+    dropdownPairs.forEach(({trigger,menu})=>{
+      if(menu!==exceptMenu){
+        setDropdownState(trigger,menu,false);
+      }
+    });
+  }
+
+  dropdownPairs.forEach(({trigger,menu})=>{
+    setDropdownState(trigger,menu,false);
+    trigger.addEventListener('click',e=>{
+      e.stopPropagation();
+      const willOpen=!menu.classList.contains('open');
+      closeDropdowns(menu);
+      setDropdownState(trigger,menu,willOpen);
+    });
+    trigger.addEventListener('keydown',e=>{
+      const items=getMenuItems(menu);
+      if(!items.length) return;
+      if(e.key==='ArrowDown' || e.key==='Enter' || e.key===' '){
+        e.preventDefault();
+        closeDropdowns(menu);
+        setDropdownState(trigger,menu,true);
+        items[0].focus();
+      }
+      if(e.key==='ArrowUp'){
+        e.preventDefault();
+        closeDropdowns(menu);
+        setDropdownState(trigger,menu,true);
+        items[items.length-1].focus();
+      }
+    });
+    menu.addEventListener('click',e=>e.stopPropagation());
+    menu.addEventListener('keydown',e=>{
+      const items=getMenuItems(menu);
+      const currentIndex=items.indexOf(document.activeElement);
+      if(e.key==='Escape'){
+        e.preventDefault();
+        closeDropdowns();
+        trigger.focus();
+        return;
+      }
+      if(currentIndex<0) return;
+      if(e.key==='ArrowDown'){
+        e.preventDefault();
+        items[(currentIndex+1)%items.length].focus();
+      }
+      if(e.key==='ArrowUp'){
+        e.preventDefault();
+        items[(currentIndex-1+items.length)%items.length].focus();
+      }
+      if(e.key==='Home'){
+        e.preventDefault();
+        items[0].focus();
+      }
+      if(e.key==='End'){
+        e.preventDefault();
+        items[items.length-1].focus();
+      }
+    });
+  });
+
+  document.addEventListener('click',()=>closeDropdowns());
+
+  document.querySelectorAll('[data-lang-option]').forEach(option=>{
+    option.addEventListener('click',e=>{
+      e.preventDefault();
+      const lang=option.getAttribute('data-lang-option');
+      setLanguage(lang);
+      closeDropdowns();
+    });
+  });
+
+  function esc(value){
+    return String(value).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch]));
+  }
+  function tagList(tags){
+    return `<div class="tags">${tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>`;
+  }
+  function bulletList(items){
+    return `<ul class="bullet-list">${items.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`;
+  }
+  function metricGrid(metrics){
+    return `<div class="metric-grid">${metrics.map(([a,b])=>`<div class="metric"><strong>${esc(a)}</strong><span>${esc(b)}</span></div>`).join('')}</div>`;
+  }
+  function socialLinks(c){
+    return `<div class="contact-card">${CONTACTS.map(item=>`<a href="${item.href}"><span aria-hidden="true">${item.icon}</span> ${esc(c.contact[item.key])}</a>`).join('')}</div>`;
+  }
+
+  const artGallery = `<div class="gallery-grid" aria-label="">
+    <div class="paint-slot"><svg viewBox="0 0 160 120"><defs><linearGradient id="a1" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#22150a"/><stop offset="1" stop-color="#0a0908"/></linearGradient></defs><rect width="160" height="120" fill="url(#a1)"/><circle cx="80" cy="42" r="24" fill="#c9a13c" opacity=".28"/><path d="M18 112 C45 82 63 80 80 112 C95 78 122 82 145 112" fill="#2d210f"/><path d="M80 53 V104" stroke="#d9b860" stroke-width="2"/><path d="M80 75 C60 78 55 92 42 105" stroke="#6d5222" fill="none"/></svg></div>
+    <div class="paint-slot"><svg viewBox="0 0 160 120"><rect width="160" height="120" fill="#182030"/><path d="M0 92 C40 74 78 84 160 62 V120 H0" fill="#60451c"/><circle cx="122" cy="28" r="18" fill="#f5c842" opacity=".58"/><path d="M62 84 H96" stroke="#f5c842" opacity=".5"/></svg></div>
+    <div class="paint-slot"><svg viewBox="0 0 160 120"><rect width="160" height="120" fill="#100b0a"/><path d="M80 0 L112 120 H48 Z" fill="#f5c842" opacity=".12"/><circle cx="80" cy="72" r="18" fill="#f5c842" opacity=".25"/><path d="M52 110 Q80 70 108 110" stroke="#f5c842" fill="none" opacity=".5"/></svg></div>
+  </div>`;
+
+  function stemPanel(c){
+    const p=c.stem;
+    return `<div class="panel-inner">
+      <p class="section-kicker">${esc(p.kicker)}</p>
+      <h2 class="sec-title">${esc(p.title)}</h2>
+      <p class="sec-lead">${esc(p.lead)}</p>
+      <div class="content-grid">
+        <article class="card feature-card">
+          <p class="mini-title">${esc(p.featureMini)}</p>
+          <h3>${esc(p.featureTitle)}</h3>
+          <p>${esc(p.featureText)}</p>
+          ${tagList(p.tags)}
+          ${metricGrid(p.metrics)}
+        </article>
+        <div class="stack">
+          ${p.cards.map(card=>`<article class="card"><h3>${esc(card.title)}</h3><p>${esc(card.text)}</p>${card.list?bulletList(card.list):''}${card.tags?tagList(card.tags):''}</article>`).join('')}
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function artPanel(c){
+    const p=c.art;
+    return `<div class="panel-inner">
+      <p class="section-kicker">${esc(p.kicker)}</p>
+      <h2 class="sec-title">${esc(p.title)}</h2>
+      <p class="sec-lead">${esc(p.lead)}</p>
+      <div class="content-grid">
+        <article class="card feature-card">
+          <p class="mini-title">${esc(p.featureMini)}</p>
+          <h3>${esc(p.featureTitle)}</h3>
+          <p>${esc(p.featureText)}</p>
+          ${tagList(p.tags)}
+          ${artGallery.replace('aria-label=""',`aria-label="${esc(p.galleryLabel)}"`)}
+        </article>
+        <div class="stack">
+          ${p.cards.map(card=>`<article class="card"><h3>${esc(card.title)}</h3><p>${esc(card.text)}</p>${tagList(card.tags)}</article>`).join('')}
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function humanitiesPanel(c){
+    const p=c.hum;
+    return `<div class="panel-inner" id="humanities">
+      <p class="section-kicker">${esc(p.kicker)}</p>
+      <h2 class="sec-title">${esc(p.title)}</h2>
+      <p class="sec-lead">${esc(p.lead)}</p>
+      <div class="content-grid">
+        <article class="card feature-card">
+          <p class="mini-title">${esc(p.featureMini)}</p>
+          <h3>${esc(p.featureTitle)}</h3>
+          <p>${esc(p.featureText)}</p>
+          ${tagList(p.tags)}
+          ${metricGrid(p.metrics)}
+        </article>
+        <div class="stack">
+          <article class="card"><h3>${esc(p.langTitle)}</h3><p>${esc(p.langText)}</p><div class="cv-line">${p.langPills.map(x=>`<span class="cv-pill">${esc(x)}</span>`).join('')}</div></article>
+          <article class="card"><h3>${esc(p.communityTitle)}</h3><p>${esc(p.communityText)}</p>${bulletList(p.communityList)}${tagList(p.communityTags)}</article>
+          <article class="card"><h3>${esc(p.contactTitle)}</h3><p>${esc(p.contactText)}</p>${socialLinks(c)}</article>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function workPanel(c){
+    const p=c.work;
+    return `<div class="panel-inner" id="work">
+      <p class="section-kicker">${esc(p.kicker)}</p>
+      <h2 class="sec-title">${esc(p.title)}</h2>
+      <p class="sec-lead">${esc(p.lead)}</p>
+      <div class="content-grid">
+        <article class="card feature-card">
+          <p class="mini-title">${esc(p.featureMini)}</p>
+          <h3>${esc(p.featureTitle)}</h3>
+          <p>${esc(p.featureText)}</p>
+          <div class="cv-mini-grid">${p.cvMini.map(([a,b])=>`<div class="cv-mini"><strong>${esc(a)}</strong><span>${esc(b)}</span></div>`).join('')}</div>
+        </article>
+        <div class="stack">
+          ${p.cards.map(card=>`<article class="card"><h3>${esc(card.title)}</h3><p>${esc(card.text)}</p>${card.list?bulletList(card.list):''}${card.tags?tagList(card.tags):''}</article>`).join('')}
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function renderPanels(){
+    const c=COPY[currentLang];
+    document.getElementById('panel-0').innerHTML=stemPanel(c);
+    document.getElementById('panel-1').innerHTML=artPanel(c);
+    document.getElementById('panel-2').innerHTML=humanitiesPanel(c);
+    document.getElementById('panel-3').innerHTML=workPanel(c);
+  }
+
+  function renderAboutFooter(){
+    const c=COPY[currentLang];
+    document.querySelector('.about-section').innerHTML=`<div class="about-inner">
+      <div class="about-layout">
+        <h2 class="about-title">${esc(c.about.title)}</h2>
+        <div>
+          <p class="about-copy">${esc(c.about.copy)}</p>
+          <div class="about-chips">${c.about.chips.map(x=>`<span class="chip">${esc(x)}</span>`).join('')}</div>
+        </div>
+      </div>
+    </div>`;
+    document.querySelector('.footer-inner').innerHTML=`<p>© 2026 Maximiliano Rodriguez</p>
+      <div class="footer-links"><a href="#top">${esc(c.footer.top)}</a><a href="#themes">${esc(c.footer.themes)}</a><a href="#about">${esc(c.footer.about)}</a><a href="mailto:maximilianoarrdv@gmail.com">${esc(c.footer.email)}</a></div>`;
+  }
+
+  function renderAtmosphere(){
+    const c=COPY[currentLang].atmosphere;
+    document.querySelector('.tech-console').innerHTML=c.tech.map(x=>`<span>${esc(x)}</span>`).join('');
+    document.querySelector('.art-caption').textContent=c.art;
+    document.querySelector('.book-page span').textContent=c.humQuote;
+    document.querySelector('.book-page p').textContent=c.humText;
+    document.querySelector('.margin-note').textContent=c.humNote;
+    document.querySelector('.exec-card').textContent=c.work;
+  }
+
+  function renderNav(){
+    const c=COPY[currentLang];
+    document.title=c.title;
+    document.documentElement.lang=c.lang;
+    document.getElementById('navbar').setAttribute('aria-label',c.nav.main);
+    document.querySelector('.skip-link').textContent=c.nav.skip;
+    document.querySelector('.nav-mark').setAttribute('aria-label',c.nav.backTop);
+    document.querySelector('[data-nav-language]').textContent=c.nav.language;
+    document.querySelector('[data-nav-contact]').textContent=c.nav.contact;
+    document.querySelectorAll('[data-contact-label]').forEach(el=>{
+      const key=el.getAttribute('data-contact-label');
+      el.textContent=c.contact[key];
+      el.closest('a')?.setAttribute('aria-label',c.contact[key]);
+    });
+    document.querySelectorAll('[data-lang-option]').forEach(el=>{
+      el.classList.toggle('active-lang',el.getAttribute('data-lang-option')===currentLang);
+    });
+  }
+
+  function renderHero(){
+    const c=COPY[currentLang];
+    document.querySelector('.eyebrow').textContent=c.hero.eyebrow;
+    document.querySelector('.hero-sub').innerHTML=`${esc(c.hero.subStart)} <span class="theme-word" id="themeWord">${esc(c.sections[cur].word)}</span>${esc(c.hero.subEnd)}`;
+    document.querySelector('.scroll-hint').textContent=c.hero.hint;
+    document.getElementById('btnPrev').setAttribute('aria-label',c.hero.prev);
+    document.getElementById('btnNext').setAttribute('aria-label',c.hero.next);
+    document.getElementById('dots').setAttribute('aria-label',c.hero.dots);
+  }
+
+  function getSections(){ return COPY[currentLang].sections; }
+
+  const N=4;
+  let cur=0;
+  let openPanel=-1;
+  const viewport=document.getElementById('viewport');
+  const dotsEl=document.getElementById('dots');
+  const panelEls=[...document.querySelectorAll('.expand-panel')];
+
+  const avatarMarkup=`<div class="avatar" aria-hidden="true"><svg viewBox="0 0 150 180" fill="none"><circle cx="75" cy="58" r="50" fill="#141414" stroke="#252525" stroke-width="2"/><path d="M4 180 Q4 112 75 112 Q146 112 146 180" fill="#141414" stroke="#252525" stroke-width="2"/></svg></div>`;
+
+  const figs=[0,1,2,3].map(i=>{
+    const div=document.createElement('article');
+    div.className='fig';
+    div.innerHTML=`${avatarMarkup}<span class="fig-label"></span><button class="fig-btn" type="button"></button>`;
+    const handler=e=>{e.stopPropagation(); if(i!==cur) goTo(i); else togglePanel(i);};
+    div.addEventListener('click',handler);
+    div.querySelector('.fig-btn').addEventListener('click',handler);
+    viewport.appendChild(div);
+    return div;
+  });
+
+  [0,1,2,3].forEach(i=>{
+    const d=document.createElement('button');
+    d.className='dot'+(i===0?' active':'');
+    d.type='button';
+    d.setAttribute('aria-pressed',i===0?'true':'false');
+    d.addEventListener('click',()=>goTo(i));
+    dotsEl.appendChild(d);
+  });
+  const dotEls=[...dotsEl.querySelectorAll('.dot')];
+
+  function getSlot(off){
+    let d=((off%N)+N)%N;
+    if(N%2===0 && d===N/2) return 's-hidden-r';
+    if(d>N/2)d-=N;
+    return ({'-2':'s-far-left','-1':'s-left','0':'s-center','1':'s-right','2':'s-far-right'})[String(d)]||(d<0?'s-hidden-l':'s-hidden-r');
+  }
+
+  function applyTheme(){
+    const sections=getSections();
+    document.body.classList.remove('theme-stem','theme-art','theme-hum','theme-work');
+    document.body.classList.add(sections[cur].theme);
+    const wordEl=document.getElementById('themeWord');
+    if(wordEl) wordEl.textContent=sections[cur].word;
+  }
+
+  function updateCarousel(){
+    const sections=getSections();
+    applyTheme();
+    figs.forEach((f,i)=>{
+      const sec=sections[i];
+      f.className='fig '+getSlot(i-cur);
+      f.setAttribute('aria-label',sec.word);
+      const label=f.querySelector('.fig-label');
+      const actionButton=f.querySelector('.fig-btn');
+      label.className='fig-label '+sec.labelClass;
+      label.innerHTML=esc(sec.label).replace(/\n/g,'<br>');
+      actionButton.textContent=sec.btnText;
+      actionButton.setAttribute('aria-label',sec.btnText);
+      actionButton.setAttribute('aria-controls','panel-'+i);
+      actionButton.setAttribute('aria-expanded',String(openPanel===i));
+    });
+    dotEls.forEach((d,i)=>{
+      const active=i===cur;
+      d.classList.toggle('active',active);
+      d.setAttribute('aria-pressed',active?'true':'false');
+      d.setAttribute('aria-label',COPY[currentLang].hero.dot+sections[i].word);
+    });
+  }
+
+  function syncPanels(){
+    panelEls.forEach((panel,idx)=>{
+      const isOpen=idx===openPanel;
+      panel.classList.toggle('open',isOpen);
+      panel.setAttribute('aria-hidden',String(!isOpen));
+      if(isOpen) panel.removeAttribute('inert');
+      else panel.setAttribute('inert','');
+    });
+    document.body.classList.toggle('panel-open',openPanel!==-1);
+  }
+
+  function closeAll(){
+    openPanel=-1;
+    syncPanels();
+  }
+
+  function togglePanel(idx){
+    const panel=document.getElementById('panel-'+idx);
+    if(openPanel===idx){
+      openPanel=-1;
+    }else{
+      openPanel=idx;
+    }
+    syncPanels();
+    updateCarousel();
+    if(openPanel===idx){
+      panel.scrollIntoView({behavior:prefersReducedMotion.matches?'auto':'smooth',block:'start'});
+    }
+  }
+
+  function goTo(n){
+    cur=((n%N)+N)%N;
+    if(openPanel>=0 && openPanel!==cur) closeAll();
+    renderHero();
+    updateCarousel();
+  }
+
+  function setLanguage(lang){
+    if(!COPY[lang]) return;
+    currentLang=lang;
+    localStorage.setItem('portfolioLang',lang);
+    renderNav();
+    renderAtmosphere();
+    renderHero();
+    renderPanels();
+    renderAboutFooter();
+    syncPanels();
+    updateCarousel();
+  }
+
+  document.getElementById('btnPrev').addEventListener('click',e=>{e.preventDefault();goTo(cur-1);});
+  document.getElementById('btnNext').addEventListener('click',e=>{e.preventDefault();goTo(cur+1);});
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowLeft')goTo(cur-1);
+    if(e.key==='ArrowRight')goTo(cur+1);
+    if(e.key==='Escape'){closeAll();closeDropdowns();}
+  });
+  let touchX=0;
+  viewport.addEventListener('touchstart',e=>{touchX=e.touches[0].clientX;},{passive:true});
+  viewport.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-touchX;
+    if(Math.abs(dx)>44) dx<0 ? goTo(cur+1) : goTo(cur-1);
+  });
+
+  setLanguage(currentLang);
+</script>
+</body>
 </html>
