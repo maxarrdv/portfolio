@@ -1100,6 +1100,66 @@
     .art-main-image{max-height:70vh;}
     .lightbox-stage img{max-height:calc(100vh - 130px);}
   }
+
+  /* === FUTURE-READY ART PAGE FIX ===
+     Lets the Art section grow naturally, prevents the last artwork (Sunset)
+     from being clipped, and gives future artworks more vertical room. */
+  .expand-panel.open{
+    max-height:20000px;
+  }
+  #panel-1 .panel-inner{
+    padding-bottom:clamp(90px,10vw,150px);
+  }
+  #panel-1 .art-section-shell{
+    gap:clamp(28px,4vw,48px);
+  }
+  #panel-1 .art-work-grid{
+    gap:clamp(46px,6vw,78px);
+  }
+  #panel-1 .art-work,
+  #panel-1 .art-work:nth-child(even){
+    grid-template-columns:minmax(0,1fr);
+    max-width:980px;
+    margin:0 auto;
+    gap:18px;
+  }
+  #panel-1 .art-work:nth-child(even) .art-image-card{
+    order:0;
+  }
+  #panel-1 .art-image-card{
+    min-height:unset;
+    overflow:visible;
+    padding:clamp(14px,2vw,22px);
+  }
+  #panel-1 .art-main-image,
+  #panel-1 .art-work.wide .art-main-image{
+    width:100%;
+    height:auto;
+    max-height:none;
+    object-fit:contain !important;
+  }
+  #panel-1 .art-work-body{
+    max-width:980px;
+    width:100%;
+  }
+  #panel-1 .art-process-strip{
+    margin-top:10px;
+  }
+  #panel-1 .art-archive{
+    grid-template-columns:1fr;
+    gap:22px;
+    max-width:980px;
+    margin:0 auto;
+  }
+  #panel-1 .art-archive-grid{
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  }
+  @media(max-width:780px){
+    .expand-panel.open{max-height:30000px;}
+    #panel-1 .art-work-grid{gap:44px;}
+    #panel-1 .art-archive-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  }
+
 </style>
 </head>
 <body class="theme-stem">
